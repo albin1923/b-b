@@ -5,8 +5,33 @@
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  gap: 4rem;
   align-items: center;
+}
+
+/* Animation states */
+.about-grid .reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.about-grid .reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: 0.15s;
+}
+
+.about-grid.visible .reveal-left,
+.about-grid.visible .reveal-right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-grid.visible .stagger-children > * {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .about-images {
@@ -129,25 +154,114 @@
 @media (max-width: 992px) {
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 3rem;
   }
 
   .about-images {
-    max-width: 500px;
+    max-width: 450px;
     margin: 0 auto;
   }
 
   .about-experience {
     right: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .exp-number {
+    font-size: 2.5rem;
   }
 
   .about-img-secondary {
     left: 1rem;
+  }
+
+  .about-img-main img {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    gap: 2.5rem;
+  }
+
+  .about-images {
+    max-width: 100%;
+  }
+
+  .about-img-main img {
+    height: 320px;
+  }
+
+  .about-experience {
+    right: 0.5rem;
+    bottom: 1rem;
+    padding: 0.875rem 1.25rem;
+  }
+
+  .exp-number {
+    font-size: 2rem;
+  }
+
+  .exp-text {
+    font-size: 0.75rem;
+  }
+
+  .about-img-secondary {
+    width: 140px;
+    left: 0.5rem;
+    top: 2rem;
+  }
+
+  .about-img-secondary img {
+    height: 110px;
+  }
+
+  .about-text {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .about-features {
+    gap: 1rem;
+  }
+
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .feature-text h4 {
+    font-size: 0.9375rem;
+  }
+
+  .feature-text p {
+    font-size: 0.8125rem;
   }
 }
 
 @media (max-width: 576px) {
   .about-features {
     grid-template-columns: 1fr;
+  }
+
+  .about-img-main img {
+    height: 280px;
+  }
+
+  .about-img-secondary {
+    width: 120px;
+  }
+
+  .about-img-secondary img {
+    height: 90px;
+  }
+
+  .about-experience {
+    padding: 0.75rem 1rem;
+  }
+
+  .exp-number {
+    font-size: 1.75rem;
   }
 }

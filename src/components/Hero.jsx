@@ -8,19 +8,19 @@ const slides = [
     image: 'https://www.bandbkonni.com/images/wlcm-img.jpg',
     title: 'Fully Furnished & Semi Furnished',
     subtitle: 'Apartments',
-    description: 'B & B Apartments is a modern building with an area of 13000 Sq.ft, constructed for both commercial and residential purposes.'
+    description: 'A modern building with 13000 Sq.ft area, designed with all modern finishes for commercial and residential purposes.'
   },
   {
     image: 'https://www.bandbkonni.com/images/nar-by1.jpg',
     title: 'Save The Wild Nature!',
     subtitle: 'Near By Attractions',
-    description: 'Konni and its surroundings has been an attractive tourist destination. Some of the major tourist attractions are Elephant cradle, Adavi Bowl boating etc.'
+    description: 'Konni - an attractive tourist destination with Elephant cradle, Adavi Bowl boating & more.'
   },
   {
     image: 'https://www.bandbkonni.com/images/unit-1.jpg',
     title: 'Premium Comfort',
     subtitle: 'Modern Living',
-    description: 'Experience the perfect blend of modern amenities and traditional Kerala hospitality in our fully equipped apartments.'
+    description: 'Experience modern amenities and traditional Kerala hospitality in our fully equipped apartments.'
   }
 ]
 
@@ -46,7 +46,12 @@ export default function Hero() {
             key={index} 
             className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
           >
-            <img src={slide.image} alt={slide.title} className="hero-image" />
+            <img 
+              src={slide.image} 
+              alt={slide.title} 
+              className="hero-image"
+              loading={index === 0 ? 'eager' : 'lazy'}
+            />
             <div className="hero-overlay"></div>
           </div>
         ))}
@@ -54,10 +59,10 @@ export default function Hero() {
 
       {/* Slider Controls */}
       <button className="slider-btn slider-prev" onClick={prevSlide} aria-label="Previous slide">
-        <ChevronLeft size={28} />
+        <ChevronLeft size={24} />
       </button>
       <button className="slider-btn slider-next" onClick={nextSlide} aria-label="Next slide">
-        <ChevronRight size={28} />
+        <ChevronRight size={24} />
       </button>
 
       {/* Slide Indicators */}
@@ -73,28 +78,28 @@ export default function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div className="hero-content container">
-        <div className="hero-badge animate-fadeInUp">
-          <MapPin size={16} />
+      <div className="hero-content">
+        <div className="hero-badge">
+          <MapPin size={14} />
           <span>Konni, Pathanamthitta, Kerala</span>
         </div>
 
-        <p className="hero-subtitle animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+        <p className="hero-subtitle">
           {slides[currentSlide].subtitle}
         </p>
 
-        <h1 className="hero-title animate-fadeInUp" style={{ animationDelay: '0.15s' }}>
+        <h1 className="hero-title">
           {slides[currentSlide].title}
         </h1>
 
-        <p className="hero-description animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+        <p className="hero-description">
           {slides[currentSlide].description}
         </p>
 
-        <div className="hero-actions animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
+        <div className="hero-actions">
           <Link to="/rooms" className="btn btn-accent">
             <span>Explore Rooms</span>
-            <ArrowRight size={18} />
+            <ArrowRight size={16} />
           </Link>
           <a 
             href="https://www.bandbkonni.com/pdf/Brochure-B-n-B.pdf" 
@@ -102,7 +107,7 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="btn btn-outline"
           >
-            <Download size={18} />
+            <Download size={16} />
             <span>Brochure</span>
           </a>
         </div>
@@ -110,30 +115,28 @@ export default function Hero() {
 
       {/* Stats Bar */}
       <div className="hero-stats-bar">
-        <div className="container">
-          <div className="hero-stats">
-            <div className="stat">
-              <Building2 size={28} className="stat-icon" />
-              <div>
-                <span className="stat-number">13,000</span>
-                <span className="stat-label">Sq.ft Area</span>
-              </div>
+        <div className="hero-stats">
+          <div className="stat">
+            <Building2 className="stat-icon" />
+            <div>
+              <span className="stat-number">13,000</span>
+              <span className="stat-label">Sq.ft Area</span>
             </div>
-            <div className="stat-divider"></div>
-            <div className="stat">
-              <Users size={28} className="stat-icon" />
-              <div>
-                <span className="stat-number">50+</span>
-                <span className="stat-label">Guest Capacity</span>
-              </div>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat">
+            <Users className="stat-icon" />
+            <div>
+              <span className="stat-number">50+</span>
+              <span className="stat-label">Guests</span>
             </div>
-            <div className="stat-divider"></div>
-            <div className="stat">
-              <Star size={28} className="stat-icon" />
-              <div>
-                <span className="stat-number">7+</span>
-                <span className="stat-label">Years Excellence</span>
-              </div>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat">
+            <Star className="stat-icon" />
+            <div>
+              <span className="stat-number">7+</span>
+              <span className="stat-label">Years</span>
             </div>
           </div>
         </div>

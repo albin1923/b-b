@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Bed, Bath, Wifi, Tv, Users, ArrowRight } from 'lucide-react'
+import { Users, ArrowRight } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useAnimations'
 import './Rooms.css'
 
 const rooms = [
@@ -34,23 +35,29 @@ const rooms = [
 ]
 
 export default function Rooms() {
+  const [sectionRef, isVisible] = useScrollReveal(0.1)
+
   return (
-    <section className="rooms section" id="rooms">
+    <section className="rooms section" id="rooms" ref={sectionRef}>
       <div className="rooms-bg"></div>
       <div className="container">
-        <div className="section-header">
-          <span className="section-tag">Our Accommodations</span>
-          <h2 className="section-title">Comfort Meets <span className="text-gradient">Elegance</span></h2>
-          <p className="section-subtitle">
+        <div className={`section-header ${isVisible ? 'visible' : ''}`}>
+          <span className="section-tag reveal">Our Accommodations</span>
+          <h2 className="section-title reveal">Comfort Meets <span className="text-gradient">Elegance</span></h2>
+          <p className="section-subtitle reveal">
             Choose from our range of fully furnished apartments designed for your comfort
           </p>
         </div>
 
-        <div className="rooms-grid">
-          {rooms.map((room) => (
-            <div className={`room-card ${room.featured ? 'featured' : ''}`} key={room.id}>
+        <div className={`rooms-grid ${isVisible ? 'visible' : ''}`}>
+          {rooms.map((room, index) => (
+            <div 
+              className={`room-card ${room.featured ? 'featured' : ''}`} 
+              key={room.id}
+              style={{ transitionDelay: `${index * 0.1}s` }}
+            >
               <div className="room-image">
-                <img src={room.image} alt={room.name} />
+                <img src={room.image} alt={room.name} loading="lazy" />
                 {room.featured && <span className="room-badge">Most Popular</span>}
               </div>
               <div className="room-content">
@@ -76,14 +83,14 @@ export default function Rooms() {
           ))}
         </div>
 
-        <div className="group-booking">
+        <div className={`group-booking ${isVisible ? 'visible' : ''}`}>
           <div className="group-content">
             <div className="group-icon">
-              <Users size={40} />
+              <Users size={32} />
             </div>
             <div className="group-text">
               <h3>Planning a Group Trip?</h3>
-              <p>Book all apartments together and enjoy special group rates for your pilgrimage or family gathering.</p>
+              <p>Book all apartments together and enjoy special group rates.</p>
             </div>
             <div className="group-price">
               <span className="from">Starting from</span>
@@ -92,7 +99,7 @@ export default function Rooms() {
             </div>
             <Link to="/contact" className="btn btn-accent">
               <span>Enquire Now</span>
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>
