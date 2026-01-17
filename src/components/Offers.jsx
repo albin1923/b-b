@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Check, ArrowRight } from 'lucide-react'
 import './Offers.css'
 
@@ -34,10 +35,10 @@ export default function Offers() {
               * Terms and conditions apply. Contact us for more details on current offers.
             </p>
 
-            <a href="#contact" className="btn btn-primary">
+            <Link to="/contact" className="btn btn-primary">
               <span>Get Best Rates</span>
               <ArrowRight size={18} />
-            </a>
+            </Link>
           </div>
           <div className="offers-image">
             <img src="https://www.bandbkonni.com/images/unit-2.jpg" alt="B&B Apartments" />

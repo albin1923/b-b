@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import './Footer.css'
 
 const quickLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About Us' },
-  { href: '#rooms', label: 'Rooms' },
-  { href: '#facilities', label: 'Facilities' },
-  { href: '#gallery', label: 'Gallery' },
-  { href: '#contact', label: 'Contact' },
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About Us' },
+  { to: '/rooms', label: 'Rooms' },
+  { to: '/facilities', label: 'Facilities' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 export default function Footer() {
@@ -18,13 +19,13 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <a href="#home" className="footer-logo">
+            <Link to="/" className="footer-logo">
               <img 
                 src="https://www.bandbkonni.com/images/ftr-lgo.jpg" 
                 alt="B&B Apartments" 
                 className="footer-logo-img"
               />
-            </a>
+            </Link>
             <p>
               Experience the best of Kerala hospitality at B&B Apartments. 
               Your home away from home in the heart of Konni.
@@ -40,8 +41,8 @@ export default function Footer() {
             <h4>Quick Links</h4>
             <ul>
               {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
+                <li key={link.to}>
+                  <Link to={link.to}>{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -50,11 +51,11 @@ export default function Footer() {
           <div className="footer-links">
             <h4>Our Services</h4>
             <ul>
-              <li><a href="#rooms">1 BHK Apartments</a></li>
-              <li><a href="#rooms">2 BHK Apartments</a></li>
-              <li><a href="#rooms">Conference Hall</a></li>
-              <li><a href="#facilities">Group Bookings</a></li>
-              <li><a href="#attractions">Tour Assistance</a></li>
+              <li><Link to="/rooms">1 BHK Apartments</Link></li>
+              <li><Link to="/rooms">2 BHK Apartments</Link></li>
+              <li><Link to="/rooms">Conference Hall</Link></li>
+              <li><Link to="/facilities">Group Bookings</Link></li>
+              <li><Link to="/attractions">Tour Assistance</Link></li>
             </ul>
           </div>
 
@@ -81,7 +82,7 @@ export default function Footer() {
           <p>&copy; {currentYear} B&B Apartments. All rights reserved.</p>
           <div className="footer-badges">
             <span>Part of</span>
-            <a href="#">B&B Group</a>
+            <Link to="/">B&B Group</Link>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Home, ShieldCheck, Leaf, MapPin, ArrowRight } from 'lucide-react'
 import './About.css'
 
@@ -66,10 +67,10 @@ export default function About() {
               ))}
             </div>
 
-            <a href="#facilities" className="btn btn-primary">
+            <Link to="/facilities" className="btn btn-primary">
               <span>Discover More</span>
               <ArrowRight size={18} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

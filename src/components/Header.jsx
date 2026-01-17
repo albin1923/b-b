@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import { Menu, X, Phone, Mail } from 'lucide-react'
 import './Header.css'
 
 const navLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#rooms', label: 'Rooms' },
-  { href: '#facilities', label: 'Facilities' },
-  { href: '#attractions', label: 'Nearby' },
-  { href: '#gallery', label: 'Gallery' },
-  { href: '#contact', label: 'Contact' },
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' },
+  { to: '/rooms', label: 'Rooms' },
+  { to: '/facilities', label: 'Facilities' },
+  { to: '/attractions', label: 'Nearby' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -26,32 +29,51 @@ export default function Header() {
   const closeMenu = () => setMenuOpen(false)
 
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-      <nav className="nav container">
-        <a href="#home" className="nav-logo">
-          <img 
-            src="https://www.bandbkonni.com/images/logo.jpg" 
-            alt="B&B Apartments Logo" 
-            className="logo-img"
-          />
-        </a>
+    <>
+      {/* Top Contact Bar */}
+      <div className={`top-bar ${scrolled || !isHomePage ? 'hidden' : ''}`}>
+        <div className="container top-bar-content">
+          <a href="tel:+914682341100" className="top-bar-item">
+            <Phone size={14} />
+            <span>+91 468 2341100</span>
+          </a>
+          <a href="mailto:contact@bandbkonni.com" className="top-bar-item">
+            <Mail size={14} />
+            <span>contact@bandbkonni.com</span>
+          </a>
+        </div>
+      </div>
 
-        <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
-          {navLinks.map((link) => (
-            <li key={link.href} className="nav-item">
-              <a href={link.href} className="nav-link" onClick={closeMenu}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+      <header className={`header ${scrolled || !isHomePage ? 'scrolled' : ''}`}>
+        <nav className="nav container">
+          <Link to="/" className="nav-logo">
+            <div className="logo-text">
+              <span className="logo-main">B&B</span>
+              <span className="logo-sub">APARTMENTS</span>
+            </div>
+          </Link>
 
-        <a href="#contact" className="nav-cta">Book Now</a>
+          <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
+            {navLinks.map((link) => (
+              <li key={link.to} className="nav-item">
+                <Link 
+                  to={link.to} 
+                  className={`nav-link ${location.pathname === link.to ? 'active' : ''}`} 
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <button className="nav-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
-    </header>
+          <Link to="/contact" className="nav-cta">Book Now</Link>
+
+          <button className="nav-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
+      </header>
+    </>
   )
 }

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Bed, Bath, Wifi, Tv, Users, ArrowRight } from 'lucide-react'
 import './Rooms.css'
 
@@ -66,9 +67,9 @@ export default function Rooms() {
                     <span className="price">₹{room.price}</span>
                     <span className="per">/night</span>
                   </div>
-                  <a href="#contact" className="btn btn-primary">
+                  <Link to="/contact" className="btn btn-primary">
                     Book Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -89,10 +90,10 @@ export default function Rooms() {
               <span className="amount">₹15,000</span>
               <span className="per">/day for all units</span>
             </div>
-            <a href="#contact" className="btn btn-accent">
+            <Link to="/contact" className="btn btn-accent">
               <span>Enquire Now</span>
               <ArrowRight size={18} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
-import Hero from './components/Hero'
-import About from './components/About'
-import Rooms from './components/Rooms'
-import Facilities from './components/Facilities'
-import Guests from './components/Guests'
-import Attractions from './components/Attractions'
-import Gallery from './components/Gallery'
-import Offers from './components/Offers'
-import Contact from './components/Contact'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import BackToTop from './components/BackToTop'
 import Preloader from './components/Preloader'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import RoomsPage from './pages/RoomsPage'
+import FacilitiesPage from './pages/FacilitiesPage'
+import AttractionsPage from './pages/AttractionsPage'
+import GalleryPage from './pages/GalleryPage'
+import ContactPage from './pages/ContactPage'
 import './App.css'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  
+  return null
+}
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -24,24 +33,23 @@ function App() {
   }, [])
 
   return (
-    <>
+    <Router>
+      <ScrollToTop />
       {loading && <Preloader />}
       <Header />
-      <main>
-        <Hero />
-        <About />
-        <Rooms />
-        <Facilities />
-        <Guests />
-        <Attractions />
-        <Gallery />
-        <Offers />
-        <Contact />
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/rooms" element={<RoomsPage />} />
+        <Route path="/facilities" element={<FacilitiesPage />} />
+        <Route path="/attractions" element={<AttractionsPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
       <Footer />
       <WhatsAppButton />
       <BackToTop />
-    </>
+    </Router>
   )
 }
 

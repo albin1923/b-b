@@ -18,3 +18,29 @@
 .section-header .section-subtitle {
   margin: 0 auto;
 }
+
+/* Page Content Styles */
+.page-content {
+  min-height: 100vh;
+}
+
+.page-header {
+  padding: calc(var(--header-height) + 4rem) 0 3rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  text-align: center;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.75rem;
+}
+
+.page-subtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 500px;
+  margin: 0 auto;
+}
