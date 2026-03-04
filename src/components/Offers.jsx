@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Check, ArrowRight } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useAnimations'
 import './Offers.css'
 
 const offers = [
@@ -11,10 +12,12 @@ const offers = [
 ]
 
 export default function Offers() {
+  const [sectionRef, sectionVisible] = useScrollReveal()
+
   return (
-    <section className="offers section">
+    <section className="offers section" ref={sectionRef}>
       <div className="container">
-        <div className="offers-card">
+        <div className={`offers-card ${sectionVisible ? 'reveal visible' : 'reveal'}`}>
           <div className="offers-content">
             <span className="section-tag">Special Offers</span>
             <h2 className="section-title">Exclusive Deals <span className="text-gradient">Await You</span></h2>
@@ -25,7 +28,9 @@ export default function Offers() {
             <ul className="offers-list">
               {offers.map((offer, index) => (
                 <li key={index}>
-                  <Check size={20} />
+                  <div className="offer-check">
+                    <Check size={16} />
+                  </div>
                   <span>{offer}</span>
                 </li>
               ))}
@@ -42,6 +47,7 @@ export default function Offers() {
           </div>
           <div className="offers-image">
             <img src="https://www.bandbkonni.com/images/unit-2.jpg" alt="B&B Apartments" />
+            <div className="offers-image-overlay"></div>
           </div>
         </div>
       </div>

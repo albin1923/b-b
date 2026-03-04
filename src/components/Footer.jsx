@@ -16,22 +16,27 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      <div className="footer-top-accent"></div>
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
               <img 
-                src="https://www.bandbkonni.com/images/ftr-lgo.jpg" 
+                src="/images/logo.jpg" 
                 alt="B&B Apartments" 
                 className="footer-logo-img"
               />
+              <div className="footer-logo-text">
+                <span className="footer-logo-main">B&B</span>
+                <span className="footer-logo-sub">APARTMENTS</span>
+              </div>
             </Link>
             <p>
               Experience the best of Kerala hospitality at B&B Apartments. 
               Your home away from home in the heart of Konni.
             </p>
             <div className="footer-social">
-              <a href="https://www.facebook.com/bnbkonni" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/bandbkonni" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.bandbkonni.com/images/fb-lgo.jpg" alt="Facebook" />
               </a>
             </div>
@@ -51,10 +56,11 @@ export default function Footer() {
           <div className="footer-links">
             <h4>Our Services</h4>
             <ul>
+              <li><Link to="/rooms">Studio Rooms</Link></li>
               <li><Link to="/rooms">1 BHK Apartments</Link></li>
               <li><Link to="/rooms">2 BHK Apartments</Link></li>
               <li><Link to="/rooms">Conference Hall</Link></li>
-              <li><Link to="/facilities">Group Bookings</Link></li>
+              <li><Link to="/rooms">Group Bookings</Link></li>
               <li><Link to="/attractions">Tour Assistance</Link></li>
             </ul>
           </div>
@@ -68,18 +74,23 @@ export default function Footer() {
               </li>
               <li>
                 <Phone size={18} />
-                <a href="tel:+918289880005">+91 82898 80005</a>
+                <div>
+                  <a href="tel:+918078898000">+91 8078898000</a><br/>
+                  <a href="tel:+919747712370">+91 97477 12370</a>
+                </div>
               </li>
               <li>
                 <Mail size={18} />
-                <a href="mailto:bandbkonni@gmail.com">bandbkonni@gmail.com</a>
+                <div>
+                  <a href="mailto:bandbkonni@gmail.com">bandbkonni@gmail.com</a>
+                </div>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {currentYear} B&B Apartments. All rights reserved.</p>
+          <p>&copy; {currentYear} B&B Apartments Konni. All rights reserved.</p>
           <div className="footer-badges">
             <span>Part of</span>
             <Link to="/">B&B Group</Link>

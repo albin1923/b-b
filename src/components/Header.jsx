@@ -33,13 +33,17 @@ export default function Header() {
       {/* Top Contact Bar */}
       <div className={`top-bar ${scrolled || !isHomePage ? 'hidden' : ''}`}>
         <div className="container top-bar-content">
-          <a href="tel:+914682341100" className="top-bar-item">
+          <a href="tel:+918078898000" className="top-bar-item">
             <Phone size={14} />
-            <span>+91 468 2341100</span>
+            <span>+91 8078898000</span>
           </a>
-          <a href="mailto:contact@bandbkonni.com" className="top-bar-item">
+          <a href="tel:+919747712370" className="top-bar-item">
+            <Phone size={14} />
+            <span>+91 97477 12370</span>
+          </a>
+          <a href="mailto:bandbkonni@gmail.com" className="top-bar-item">
             <Mail size={14} />
-            <span>contact@bandbkonni.com</span>
+            <span>bandbkonni@gmail.com</span>
           </a>
         </div>
       </div>
@@ -47,6 +51,7 @@ export default function Header() {
       <header className={`header ${scrolled || !isHomePage ? 'scrolled' : ''}`}>
         <nav className="nav container">
           <Link to="/" className="nav-logo">
+            <img src="/images/logo.jpg" alt="B&B" className="logo-image" />
             <div className="logo-text">
               <span className="logo-main">B&B</span>
               <span className="logo-sub">APARTMENTS</span>
@@ -65,6 +70,11 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li className="nav-item nav-mobile-cta">
+              <Link to="/contact" className="btn btn-accent" onClick={closeMenu}>
+                Book Now
+              </Link>
+            </li>
           </ul>
 
           <Link to="/contact" className="nav-cta">Book Now</Link>

@@ -1,4 +1,5 @@
 import { Users, Briefcase, Heart, Globe } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useAnimations'
 import './Guests.css'
 
 const guests = [
@@ -29,21 +30,23 @@ const guests = [
 ]
 
 export default function Guests() {
+  const [sectionRef, sectionVisible] = useScrollReveal()
+
   return (
-    <section className="guests section">
+    <section className="guests section" ref={sectionRef}>
       <div className="container">
-        <div className="section-header">
+        <div className={`section-header ${sectionVisible ? 'reveal visible' : 'reveal'}`}>
           <span className="section-tag">Who We Serve</span>
           <h2 className="section-title" style={{ color: 'white' }}>
             Perfect For <span className="text-gradient">Everyone</span>
           </h2>
         </div>
 
-        <div className="guests-grid">
+        <div className={`guests-grid ${sectionVisible ? 'stagger-children visible' : 'stagger-children'}`}>
           {guests.map((guest, index) => (
             <div className="guest-card" key={index}>
               <div className="guest-image">
-                <img src={guest.image} alt={guest.title} />
+                <img src={guest.image} alt={guest.title} loading="lazy" />
               </div>
               <div className="guest-overlay"></div>
               <div className="guest-content">

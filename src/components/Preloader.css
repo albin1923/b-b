@@ -6,26 +6,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeOut 0.5s ease 1s forwards;
+  animation: fadeOut 0.5s ease 1.2s forwards;
 }
 
 .preloader-inner {
   text-align: center;
 }
 
+.preloader-logo-img {
+  width: 80px;
+  height: auto;
+  margin: 0 auto 1rem;
+  border-radius: 10px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
 .preloader-logo {
   font-family: var(--font-display);
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 0.1em;
-  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .preloader-text {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   margin-bottom: 2rem;
@@ -34,7 +41,7 @@
 .preloader-bar {
   width: 200px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   overflow: hidden;
   margin: 0 auto;

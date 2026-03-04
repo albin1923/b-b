@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { X } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useAnimations'
 import './Gallery.css'
 
 const images = [
@@ -19,11 +20,24 @@ const images = [
 
 export default function Gallery() {
   const [lightbox, setLightbox] = useState(null)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [sectionRef, sectionVisible] = useScrollReveal()
+
+  const openLightbox = (image, index) => {
+    setLightbox(image)
+    setLightboxIndex(index)
+  }
+
+  const navigate = (dir) => {
+    const next = (lightboxIndex + dir + images.length) % images.length
+    setLightboxIndex(next)
+    setLightbox(images[next])
+  }
 
   return (
-    <section className="gallery section" id="gallery">
+    <section className="gallery section" id="gallery" ref={sectionRef}>
       <div className="container">
-        <div className="section-header">
+        <div className={`section-header ${sectionVisible ? 'reveal visible' : 'reveal'}`}>
           <span className="section-tag">Gallery</span>
           <h2 className="section-title">Explore Our <span className="text-gradient">Spaces</span></h2>
           <p className="section-subtitle">
@@ -31,16 +45,16 @@ export default function Gallery() {
           </p>
         </div>
 
-        <div className="gallery-grid">
+        <div className={`gallery-grid ${sectionVisible ? 'stagger-children visible' : 'stagger-children'}`}>
           {images.map((image, index) => (
             <div 
               className={`gallery-item ${image.large ? 'large' : ''} ${image.tall ? 'tall' : ''}`}
               key={index}
-              onClick={() => setLightbox(image)}
+              onClick={() => openLightbox(image, index)}
             >
               <img src={image.src} alt={image.alt} loading="lazy" />
               <div className="gallery-overlay">
-                <span>{image.alt}</span>
+                <span className="gallery-label">{image.alt}</span>
               </div>
             </div>
           ))}
@@ -49,10 +63,19 @@ export default function Gallery() {
 
       {lightbox && (
         <div className="lightbox" onClick={() => setLightbox(null)}>
-          <button className="lightbox-close" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); setLightbox(null); }}>
             <X size={24} />
           </button>
-          <img src={lightbox.src} alt={lightbox.alt} />
+          <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); navigate(-1); }}>
+            <ChevronLeft size={28} />
+          </button>
+          <img src={lightbox.src} alt={lightbox.alt} onClick={(e) => e.stopPropagation()} />
+          <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); navigate(1); }}>
+            <ChevronRight size={28} />
+          </button>
+          <div className="lightbox-counter" onClick={(e) => e.stopPropagation()}>
+            {lightboxIndex + 1} / {images.length}
+          </div>
         </div>
       )}
     </section>

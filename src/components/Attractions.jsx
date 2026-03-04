@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { MapPin, Church } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useAnimations'
 import './Attractions.css'
 
 const touristSpots = [
@@ -14,20 +15,22 @@ const pilgrimSpots = [
   { name: 'Mannadi Temple', distance: '5 km', image: 'https://www.bandbkonni.com/images/nar-by11.jpg' },
   { name: 'Aranmula Parthasarathy', distance: '15 km', image: 'https://www.bandbkonni.com/images/nar-by13.jpg' },
   { name: 'Pandalam Palace', distance: '12 km', image: 'https://www.bandbkonni.com/images/nar-by15.jpg' },
+  { name: 'Kalleli Oorali Appoppankavu', distance: '8 km', image: 'https://www.bandbkonni.com/images/nar-by11.jpg' },
 ]
 
 export default function Attractions() {
   const [activeTab, setActiveTab] = useState('tourist')
+  const [sectionRef, isVisible] = useScrollReveal(0.1)
 
   const spots = activeTab === 'tourist' ? touristSpots : pilgrimSpots
 
   return (
-    <section className="attractions section" id="attractions">
+    <section className="attractions section" id="attractions" ref={sectionRef}>
       <div className="container">
-        <div className="section-header">
-          <span className="section-tag">Explore</span>
-          <h2 className="section-title">Nearby <span className="text-gradient">Attractions</span></h2>
-          <p className="section-subtitle">
+        <div className={`section-header ${isVisible ? 'visible' : ''}`}>
+          <span className="section-tag reveal">Explore</span>
+          <h2 className="section-title reveal">Nearby <span className="text-gradient">Attractions</span></h2>
+          <p className="section-subtitle reveal">
             Discover the beauty and spirituality of central Travancore
           </p>
         </div>
@@ -51,9 +54,13 @@ export default function Attractions() {
 
         <div className="attractions-grid">
           {spots.map((spot, index) => (
-            <div className="attraction-card" key={index}>
+            <div className="attraction-card" key={`${activeTab}-${index}`}>
               <div className="attraction-image">
-                <img src={spot.image} alt={spot.name} />
+                <img src={spot.image} alt={spot.name} loading="lazy" />
+                <div className="attraction-distance">
+                  <MapPin size={12} />
+                  <span>{spot.distance}</span>
+                </div>
               </div>
               <div className="attraction-content">
                 <h4>{spot.name}</h4>

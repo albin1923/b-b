@@ -7,7 +7,7 @@ const features = [
   { icon: Home, title: 'Home-like Comfort', desc: 'Fully equipped kitchens & living spaces' },
   { icon: ShieldCheck, title: '24/7 Security', desc: 'Round the clock safety & assistance' },
   { icon: Leaf, title: 'Eco-Friendly', desc: 'Solar energy & rainwater harvesting' },
-  { icon: MapPin, title: 'Prime Location', desc: 'Gateway to pilgrim & tourist spots' },
+  { icon: MapPin, title: 'Prime Location', desc: 'Gateway to pilgrim & tourist spots, 1 KM from Moovattupuzha – Punalur new highway' },
 ]
 
 export default function About() {
@@ -44,15 +44,17 @@ export default function About() {
             <h2 className="section-title">
               A Modern Haven in <span className="text-gradient">God's Own Country</span>
             </h2>
+            <p className="about-tagline">Stay with us feel at Home</p>
 
             <p className="about-text">
               B & B Tower and B & B Apartments is a modern building with an area of 13000 Sq.ft, 
               for both commercial and residential purposes. It is designed and built with all modern finishes 
-              and includes basement parking, apartment reception, mini conference hall, roof top garden.
+              and includes basement parking, lift, apartment reception, mini conference hall, roof top garden, 
+              play ground, badminton court, football/cricket turf etc.
             </p>
 
             <p className="about-text">
-              We offer fully furnished and semi furnished accommodation with kitchen facilities 
+              We offer fully furnished rooms and apartment's accommodation with kitchen facilities 
               on daily and monthly basis for tourists, visitors, business persons, and pilgrims to Kerala.
             </p>
 

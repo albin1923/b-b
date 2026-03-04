@@ -6,9 +6,9 @@ import './Hero.css'
 const slides = [
   {
     image: 'https://www.bandbkonni.com/images/wlcm-img.jpg',
-    title: 'Fully Furnished & Semi Furnished',
-    subtitle: 'Apartments',
-    description: 'A modern building with 13000 Sq.ft area, designed with all modern finishes for commercial and residential purposes.'
+    title: 'Welcome to B&B',
+    subtitle: 'A Modern Haven in God\'s Own Country',
+    description: 'Stay with us feel at Home. B & B Tower and B & B Apartments is a modern building with all modern finishes including basement parking, lift, conference hall, roof top garden & more.'
   },
   {
     image: 'https://www.bandbkonni.com/images/nar-by1.jpg',
@@ -57,6 +57,10 @@ export default function Hero() {
         ))}
       </div>
 
+      {/* Decorative Elements */}
+      <div className="hero-decor-left"></div>
+      <div className="hero-decor-right"></div>
+
       {/* Slider Controls */}
       <button className="slider-btn slider-prev" onClick={prevSlide} aria-label="Previous slide">
         <ChevronLeft size={24} />
@@ -84,15 +88,15 @@ export default function Hero() {
           <span>Konni, Pathanamthitta, Kerala</span>
         </div>
 
-        <p className="hero-subtitle">
+        <p className="hero-subtitle" key={`sub-${currentSlide}`}>
           {slides[currentSlide].subtitle}
         </p>
 
-        <h1 className="hero-title">
+        <h1 className="hero-title" key={`title-${currentSlide}`}>
           {slides[currentSlide].title}
         </h1>
 
-        <p className="hero-description">
+        <p className="hero-description" key={`desc-${currentSlide}`}>
           {slides[currentSlide].description}
         </p>
 
@@ -128,7 +132,7 @@ export default function Hero() {
             <Users className="stat-icon" />
             <div>
               <span className="stat-number">50+</span>
-              <span className="stat-label">Guests</span>
+              <span className="stat-label">Happy Guests</span>
             </div>
           </div>
           <div className="stat-divider"></div>

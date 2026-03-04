@@ -1,36 +1,55 @@
 import { Link } from 'react-router-dom'
-import { Users, ArrowRight } from 'lucide-react'
+import { Users, ArrowRight, Bed, Bath, UtensilsCrossed, Wifi, Sofa, Star } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Rooms.css'
 
 const rooms = [
   {
     id: 1,
-    type: 'Apartment',
-    name: '1 BHK Apartment',
-    description: 'Perfect for couples or solo travelers. Fully furnished with modern amenities.',
-    image: 'https://www.bandbkonni.com/images/unit-3.jpg',
-    price: '2,500',
-    amenities: ['1 Bedroom', '1 Bathroom', 'Kitchen', 'WiFi'],
+    type: 'Studio',
+    name: 'Studio Rooms',
+    description: 'Perfect for couples or solo travellers. Fully furnished with modern amenities.',
+    image: 'https://www.bandbkonni.com/images/unit-1.jpg',
+    price: '1,500',
+    amenities: ['Bedroom', 'Bathroom', 'WiFi', 'AC'],
   },
   {
     id: 2,
+    type: 'Apartment',
+    name: '1 BHK Apartment',
+    description: 'Perfect for couples or solo travellers. Fully furnished with modern amenities.',
+    image: 'https://www.bandbkonni.com/images/unit-3.jpg',
+    price: '2,500',
+    amenities: ['1 Bedroom', '1 Bathroom', 'Kitchen', 'Balcony', 'WiFi'],
+  },
+  {
+    id: 3,
     type: 'Apartment',
     name: '2 BHK Apartment',
     description: 'Spacious apartments ideal for families or small groups.',
     image: 'https://www.bandbkonni.com/images/unit-5.jpg',
     price: '3,500',
-    amenities: ['2 Bedrooms', '2 Bathrooms', 'Kitchen', 'Living Room'],
+    amenities: ['2 Bedrooms', '2 Bathrooms', 'Kitchen', 'Living Room', 'Balcony'],
     featured: true,
   },
   {
-    id: 3,
+    id: 4,
+    type: 'Dormitory',
+    name: 'Dormitory',
+    description: 'Dormitory facilities available for Group of Travellers/Pilgrims/Wedding Parties etc.',
+    image: 'https://www.bandbkonni.com/images/unit-9.jpg',
+    price: '800',
+    amenities: ['Shared Room', 'Bathroom', 'WiFi', 'AC'],
+    perPerson: true,
+  },
+  {
+    id: 5,
     type: 'Conference',
     name: 'Conference Hall',
     description: 'Mini conference hall perfect for meetings and small events.',
     image: 'https://www.bandbkonni.com/images/unit-7.jpg',
-    price: '3,500',
-    amenities: ['40 Capacity', 'Projector', 'AC', 'Audio System'],
+    price: '5,000',
+    amenities: ['60 Capacity', 'Projector', 'AC', 'Audio System'],
   },
 ]
 
@@ -71,10 +90,11 @@ export default function Rooms() {
                 </ul>
                 <div className="room-footer">
                   <div className="room-price">
-                    <span className="price">₹{room.price}</span>
-                    <span className="per">/night</span>
+                    <span className="price-symbol">₹</span>
+                    <span className="price">{room.price}</span>
+                    <span className="per">/{room.perPerson ? 'person' : 'night'}</span>
                   </div>
-                  <Link to="/contact" className="btn btn-primary">
+                  <Link to="/contact" className="btn btn-primary room-btn">
                     Book Now
                   </Link>
                 </div>
@@ -94,8 +114,9 @@ export default function Rooms() {
             </div>
             <div className="group-price">
               <span className="from">Starting from</span>
-              <span className="amount">₹15,000</span>
+              <span className="amount">₹25,000</span>
               <span className="per">/day for all units</span>
+              <span className="group-note">for 25-40 persons</span>
             </div>
             <Link to="/contact" className="btn btn-accent">
               <span>Enquire Now</span>

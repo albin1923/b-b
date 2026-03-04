@@ -36,7 +36,7 @@
   transform: translateY(0);
 }
 
-/* Grid animations */
+/* Grid */
 .rooms-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -56,13 +56,14 @@
 
 /* Group booking animation */
 .group-booking {
-  margin-top: 4rem;
-  background: var(--primary);
+  margin-top: 3rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   border-radius: var(--radius-2xl);
   overflow: hidden;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  border: 1px solid rgba(212, 168, 83, 0.15);
 }
 
 .group-booking.visible {
@@ -70,26 +71,30 @@
   transform: translateY(0);
 }
 
+/* Room Card */
 .room-card {
   background: var(--white);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
   border: 1px solid var(--border);
+  transition: var(--transition);
 }
 
 .room-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+  border-color: rgba(212, 168, 83, 0.3);
 }
 
 .room-card.featured {
   border: 2px solid var(--accent);
-  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(212, 168, 83, 0.15);
 }
 
 .room-card.featured:hover {
-  transform: scale(1.02) translateY(-10px);
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(212, 168, 83, 0.2);
 }
 
 .room-image {
@@ -102,11 +107,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition-slow);
+  transition: transform 0.6s ease;
 }
 
 .room-card:hover .room-image img {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .room-badge {
@@ -117,10 +122,11 @@
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: var(--primary);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: var(--radius);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(212, 168, 83, 0.3);
 }
 
 .room-content {
@@ -128,10 +134,10 @@
 }
 
 .room-type {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
   color: var(--accent-dark);
   margin-bottom: 0.5rem;
   display: block;
@@ -162,9 +168,10 @@
 .room-amenities li {
   font-size: 0.8125rem;
   color: var(--text-body);
-  padding: 0.375rem 0.75rem;
+  padding: 0.375rem 0.875rem;
   background: var(--cream);
-  border-radius: var(--radius-sm);
+  border-radius: 50px;
+  font-weight: 500;
 }
 
 .room-footer {
@@ -175,36 +182,43 @@
   border-top: 1px solid var(--border);
 }
 
+.room-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.125rem;
+}
+
+.room-price .price-symbol {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
 .room-price .price {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--primary);
 }
 
 .room-price .per {
   font-size: 0.875rem;
   color: var(--text-muted);
+  margin-left: 0.125rem;
 }
 
-.room-footer .btn {
-  padding: 0.625rem 1.25rem;
+.room-btn {
+  padding: 0.625rem 1.5rem;
   font-size: 0.875rem;
+  border-radius: 50px;
 }
 
 /* Group Booking */
-.group-booking {
-  margin-top: 4rem;
-  background: var(--primary);
-  border-radius: var(--radius-2xl);
-  overflow: hidden;
-}
-
 .group-content {
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 2.5rem;
+  padding: 2.5rem 3rem;
 }
 
 .group-icon {
@@ -213,10 +227,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(212, 168, 83, 0.2);
+  background: rgba(212, 168, 83, 0.15);
   border-radius: var(--radius-xl);
   flex-shrink: 0;
   color: var(--accent);
+  border: 1px solid rgba(212, 168, 83, 0.2);
 }
 
 .group-text {
@@ -246,15 +261,17 @@
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  font-weight: 500;
 }
 
 .group-price .amount {
   display: block;
   font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: var(--accent);
+  line-height: 1.2;
 }
 
 .group-price .per {
@@ -262,15 +279,18 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
+.group-price .group-note {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(212, 168, 83, 0.8);
+  margin-top: 0.375rem;
+  font-weight: 500;
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
   .rooms-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .room-card.featured {
-    grid-column: span 2;
-    max-width: 500px;
-    margin: 0 auto;
   }
 }
 
@@ -289,7 +309,6 @@
   }
 
   .room-card.featured {
-    grid-column: span 1;
     transform: none;
   }
 
@@ -320,15 +339,15 @@
 
   .room-amenities li {
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.625rem;
   }
 
   .room-price .price {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
-  .room-footer .btn {
-    padding: 0.5rem 1rem;
+  .room-btn {
+    padding: 0.5rem 1.25rem;
     font-size: 0.8125rem;
   }
 
@@ -341,7 +360,7 @@
     flex-direction: column;
     text-align: center;
     gap: 1.25rem;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 
   .group-icon {
@@ -367,7 +386,7 @@
   }
 
   .group-price .amount {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 }
 
@@ -382,7 +401,7 @@
     align-items: stretch;
   }
 
-  .room-footer .btn {
+  .room-btn {
     width: 100%;
     justify-content: center;
   }

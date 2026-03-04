@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { useScrollReveal } from '../hooks/useAnimations'
 import './Contact.css'
 
 export default function Contact() {
+  const [sectionRef, isVisible] = useScrollReveal(0.1)
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', guests: '', checkIn: '', checkOut: '', message: ''
   })
@@ -13,16 +15,15 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // WhatsApp redirect with form data
     const text = `Hello, I would like to make a booking enquiry.%0A%0AName: ${formData.name}%0AEmail: ${formData.email}%0APhone: ${formData.phone}%0AGuests: ${formData.guests}%0ACheck-in: ${formData.checkIn}%0ACheck-out: ${formData.checkOut}%0AMessage: ${formData.message}`
-    window.open(`https://wa.me/918289880005?text=${text}`, '_blank')
+    window.open(`https://wa.me/918078898000?text=${text}`, '_blank')
   }
 
   return (
-    <section className="contact section" id="contact">
+    <section className="contact section" id="contact" ref={sectionRef}>
       <div className="container">
-        <div className="contact-grid">
-          <div className="contact-info">
+        <div className={`contact-grid ${isVisible ? 'visible' : ''}`}>
+          <div className="contact-info reveal-left">
             <span className="section-tag">Get in Touch</span>
             <h2 className="section-title">Book Your <span className="text-gradient">Stay Today</span></h2>
             <p className="contact-desc">
@@ -43,7 +44,7 @@ export default function Contact() {
                 <div className="info-content">
                   <h4>Phone</h4>
                   <p>
-                    <a href="tel:+918289880005">+91 82898 80005</a><br/>
+                    <a href="tel:+918078898000">+91 8078898000</a><br/>
                     <a href="tel:+919747712370">+91 97477 12370</a>
                   </p>
                 </div>
@@ -52,7 +53,9 @@ export default function Contact() {
                 <div className="info-icon"><Mail size={24} /></div>
                 <div className="info-content">
                   <h4>Email</h4>
-                  <p><a href="mailto:bandbkonni@gmail.com">bandbkonni@gmail.com</a></p>
+                  <p>
+                    <a href="mailto:bandbkonni@gmail.com">bandbkonni@gmail.com</a>
+                  </p>
                 </div>
               </div>
               <div className="info-card">
@@ -65,19 +68,19 @@ export default function Contact() {
             </div>
 
             <div className="social-booking">
-              <a href="https://www.facebook.com/bnbkonni" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/bandbkonni" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.bandbkonni.com/images/fb-lgo.jpg" alt="Facebook" />
               </a>
-              <a href="https://www.booking.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.booking.com/searchresults.html?ss=B%26B+Apartments+Konni" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.bandbkonni.com/images/boking-lgo.png" alt="Booking.com" />
               </a>
-              <a href="https://www.goibibo.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.goibibo.com/hotels/" target="_blank" rel="noopener noreferrer">
                 <img src="https://www.bandbkonni.com/images/goibibo.png" alt="Goibibo" />
               </a>
             </div>
           </div>
 
-          <div className="contact-form-wrapper">
+          <div className="contact-form-wrapper reveal-right">
             <h3>Send an Enquiry</h3>
             <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-row">
