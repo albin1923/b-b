@@ -1,6 +1,6 @@
 import { 
   Car, Wifi, Shield, Sun, Droplets, Wind, Utensils, Tv,
-  Coffee, Shirt, TreePine, Dumbbell, Users, Flame, Zap, Smartphone,
+  Coffee, Shirt, TreePine, Dumbbell, Users, Flame, Zap,
   ArrowUpFromLine, Battery, CircleDot
 } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
@@ -25,7 +25,6 @@ const facilities = [
   { icon: Users, name: 'Conference Hall', desc: 'Meeting space' },
   { icon: Flame, name: 'Fire Safety', desc: 'Full protection' },
   { icon: Zap, name: 'Power Backup', desc: 'Generator backup' },
-  { icon: Smartphone, name: 'Intercom', desc: 'Easy communication' },
 ]
 
 export default function Facilities() {
@@ -36,7 +35,7 @@ export default function Facilities() {
       <div className="container">
         <div className={`section-header ${isVisible ? 'visible' : ''}`}>
           <span className="section-tag reveal">Amenities</span>
-          <h2 className="section-title reveal">World-Class <span className="text-gradient">Facilities</span></h2>
+          <h2 className="section-title reveal">Premium <span className="text-gradient">Facilities</span></h2>
           <p className="section-subtitle reveal">
             Everything you need for a comfortable and memorable stay
           </p>

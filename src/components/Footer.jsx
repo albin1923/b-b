@@ -22,7 +22,7 @@ export default function Footer() {
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
               <img 
-                src="/images/logo.jpg" 
+                src="/images/logo.png" 
                 alt="B&B Apartments" 
                 className="footer-logo-img"
               />
@@ -70,7 +70,7 @@ export default function Footer() {
             <ul>
               <li>
                 <MapPin size={18} />
-                <span>B&B Tower, Konni P.O,<br/>Pathanamthitta, Kerala - 689691</span>
+                <span>B&B Apartments, Konni P.O,<br/>Pathanamthitta, Kerala - 689691</span>
               </li>
               <li>
                 <Phone size={18} />

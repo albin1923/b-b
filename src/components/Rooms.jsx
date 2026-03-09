@@ -113,10 +113,10 @@ export default function Rooms() {
               <p>Book all apartments together and enjoy special group rates.</p>
             </div>
             <div className="group-price">
-              <span className="from">Starting from</span>
-              <span className="amount">₹25,000</span>
-              <span className="per">/day for all units</span>
-              <span className="group-note">for 25-40 persons</span>
+              <span className="from">Special rates for</span>
+              <span className="amount">Groups</span>
+              <span className="per">of 25-40 persons</span>
+              <span className="group-note">Contact for pricing</span>
             </div>
             <Link to="/contact" className="btn btn-accent">
               <span>Enquire Now</span>

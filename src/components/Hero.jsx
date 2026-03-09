@@ -8,7 +8,7 @@ const slides = [
     image: 'https://www.bandbkonni.com/images/wlcm-img.jpg',
     title: 'Welcome to B&B',
     subtitle: 'A Modern Haven in God\'s Own Country',
-    description: 'Stay with us feel at Home. B & B Tower and B & B Apartments is a modern building with all modern finishes including basement parking, lift, conference hall, roof top garden & more.'
+    description: 'Stay with us, feel at Home. A modern apartment complex with all modern finishes including basement parking, lift, conference hall, roof top garden & more.'
   },
   {
     image: 'https://www.bandbkonni.com/images/nar-by1.jpg',

@@ -47,10 +47,10 @@ export default function About() {
             <p className="about-tagline">Stay with us feel at Home</p>
 
             <p className="about-text">
-              B & B Tower and B & B Apartments is a modern building with an area of 13000 Sq.ft, 
-              for both commercial and residential purposes. It is designed and built with all modern finishes 
-              and includes basement parking, lift, apartment reception, mini conference hall, roof top garden, 
-              play ground, badminton court, football/cricket turf etc.
+              B&B Apartments is a modern building with an area of 13,000 Sq.ft, 
+              designed and built with all modern finishes including basement parking, lift, 
+              apartment reception, mini conference hall, roof top garden, playground, 
+              badminton court, football/cricket turf and more.
             </p>
 
             <p className="about-text">

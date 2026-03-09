@@ -6,13 +6,19 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 4rem 0;
+    padding: 2.5rem 0;
   }
 }
 
 .section-header {
   text-align: center;
   margin-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .section-header .section-subtitle {

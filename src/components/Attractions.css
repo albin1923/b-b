@@ -121,19 +121,51 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .attractions-tabs {
-    flex-direction: column;
-    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .tab-btn {
-    width: 100%;
-    max-width: 250px;
-    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
   }
 
   .attractions-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .attractions-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .attraction-card {
+    min-width: 220px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .attraction-image {
+    height: 140px;
+  }
+
+  .attraction-content {
+    padding: 0.75rem;
+  }
+
+  .attraction-content h4 {
+    font-size: 0.9375rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .attraction-content p {
+    font-size: 0.75rem;
   }
 }

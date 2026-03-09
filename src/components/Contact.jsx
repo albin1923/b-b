@@ -36,7 +36,7 @@ export default function Contact() {
                 <div className="info-icon"><MapPin size={24} /></div>
                 <div className="info-content">
                   <h4>Address</h4>
-                  <p>B&B Tower, Konni P.O,<br/>Pathanamthitta, Kerala - 689691</p>
+                  <p>B&B Apartments, Konni P.O,<br/>Pathanamthitta, Kerala - 689691</p>
                 </div>
               </div>
               <div className="info-card">
