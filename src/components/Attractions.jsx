@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { MapPin, Church } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'

@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { Users, ArrowRight, Bed, Bath, UtensilsCrossed, Wifi, Sofa, Star } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Rooms.css'
@@ -94,7 +96,7 @@ export default function Rooms() {
                     <span className="price">{room.price}</span>
                     <span className="per">/{room.perPerson ? 'person' : 'night'}</span>
                   </div>
-                  <Link to="/contact" className="btn btn-primary room-btn">
+                  <Link href="/contact" className="btn btn-primary room-btn">
                     Book Now
                   </Link>
                 </div>
@@ -118,7 +120,7 @@ export default function Rooms() {
               <span className="per">of 25-40 persons</span>
               <span className="group-note">Contact for pricing</span>
             </div>
-            <Link to="/contact" className="btn btn-accent">
+            <Link href="/contact" className="btn btn-accent">
               <span>Enquire Now</span>
               <ArrowRight size={16} />
             </Link>

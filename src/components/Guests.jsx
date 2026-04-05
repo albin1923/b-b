@@ -1,3 +1,5 @@
+'use client'
+
 import { Users, Briefcase, Heart, Globe } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Guests.css'

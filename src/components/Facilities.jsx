@@ -1,3 +1,5 @@
+'use client'
+
 import { 
   Car, Wifi, Shield, Sun, Droplets, Wind, Utensils, Tv,
   Coffee, Shirt, TreePine, Dumbbell, Users, Flame, Zap,

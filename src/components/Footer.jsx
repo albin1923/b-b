@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import './Footer.css'
 
@@ -20,7 +22,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link to="/" className="footer-logo">
+            <Link href="/" className="footer-logo">
               <img 
                 src="/images/logo.png" 
                 alt="B&B Apartments" 
@@ -47,7 +49,7 @@ export default function Footer() {
             <ul>
               {quickLinks.map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to}>{link.label}</Link>
+                  <Link href={link.to}>{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -56,12 +58,12 @@ export default function Footer() {
           <div className="footer-links">
             <h4>Our Services</h4>
             <ul>
-              <li><Link to="/rooms">Studio Rooms</Link></li>
-              <li><Link to="/rooms">1 BHK Apartments</Link></li>
-              <li><Link to="/rooms">2 BHK Apartments</Link></li>
-              <li><Link to="/rooms">Conference Hall</Link></li>
-              <li><Link to="/rooms">Group Bookings</Link></li>
-              <li><Link to="/attractions">Tour Assistance</Link></li>
+              <li><Link href="/rooms">Studio Rooms</Link></li>
+              <li><Link href="/rooms">1 BHK Apartments</Link></li>
+              <li><Link href="/rooms">2 BHK Apartments</Link></li>
+              <li><Link href="/rooms">Conference Hall</Link></li>
+              <li><Link href="/rooms">Group Bookings</Link></li>
+              <li><Link href="/attractions">Tour Assistance</Link></li>
             </ul>
           </div>
 
@@ -93,7 +95,7 @@ export default function Footer() {
           <p>&copy; {currentYear} B&B Apartments Konni. All rights reserved.</p>
           <div className="footer-badges">
             <span>Part of</span>
-            <Link to="/">B&B Group</Link>
+            <Link href="/">B&B Group</Link>
           </div>
         </div>
       </div>

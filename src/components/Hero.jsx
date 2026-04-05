@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { MapPin, ArrowRight, Download, Building2, Users, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import './Hero.css'
 
@@ -101,7 +103,7 @@ export default function Hero() {
         </p>
 
         <div className="hero-actions">
-          <Link to="/rooms" className="btn btn-accent">
+          <Link href="/rooms" className="btn btn-accent">
             <span>Explore Rooms</span>
             <ArrowRight size={16} />
           </Link>

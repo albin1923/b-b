@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { Home, ShieldCheck, Leaf, MapPin, ArrowRight } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './About.css'
@@ -72,7 +74,7 @@ export default function About() {
               ))}
             </div>
 
-            <Link to="/facilities" className="btn btn-primary">
+            <Link href="/facilities" className="btn btn-primary">
               <span>Discover More</span>
               <ArrowRight size={18} />
             </Link>

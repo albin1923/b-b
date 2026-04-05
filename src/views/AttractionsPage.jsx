@@ -1,3 +1,5 @@
+'use client'
+
 import Attractions from '../components/Attractions'
 
 export default function AttractionsPage() {

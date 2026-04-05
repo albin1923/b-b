@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+'use client'
+
+import Link from 'next/link'
 import { Check, ArrowRight } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Offers.css'
@@ -40,7 +42,7 @@ export default function Offers() {
               * Terms and conditions apply. Contact us for more details on current offers.
             </p>
 
-            <Link to="/contact" className="btn btn-primary">
+            <Link href="/contact" className="btn btn-primary">
               <span>Get Best Rates</span>
               <ArrowRight size={18} />
             </Link>

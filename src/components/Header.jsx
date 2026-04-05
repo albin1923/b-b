@@ -1,5 +1,8 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X, Phone, Mail } from 'lucide-react'
 import './Header.css'
 
@@ -16,8 +19,8 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
-  const isHomePage = location.pathname === '/'
+  const pathname = usePathname()
+  const isHomePage = pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -50,7 +53,7 @@ export default function Header() {
 
       <header className={`header ${scrolled || !isHomePage ? 'scrolled' : ''}`}>
         <nav className="nav container">
-          <Link to="/" className="nav-logo">
+          <Link href="/" className="nav-logo">
             <img src="/images/logo.png" alt="B&B" className="logo-image" />
             <div className="logo-text">
               <span className="logo-main">B&B</span>
@@ -62,8 +65,8 @@ export default function Header() {
             {navLinks.map((link) => (
               <li key={link.to} className="nav-item">
                 <Link 
-                  to={link.to} 
-                  className={`nav-link ${location.pathname === link.to ? 'active' : ''}`} 
+                  href={link.to} 
+                  className={`nav-link ${pathname === link.to ? 'active' : ''}`} 
                   onClick={closeMenu}
                 >
                   {link.label}
@@ -71,13 +74,13 @@ export default function Header() {
               </li>
             ))}
             <li className="nav-item nav-mobile-cta">
-              <Link to="/contact" className="btn btn-accent" onClick={closeMenu}>
+              <Link href="/contact" className="btn btn-accent" onClick={closeMenu}>
                 Book Now
               </Link>
             </li>
           </ul>
 
-          <Link to="/contact" className="nav-cta">Book Now</Link>
+          <Link href="/contact" className="nav-cta">Book Now</Link>
 
           <button className="nav-toggle" onClick={toggleMenu} aria-label="Toggle menu">
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
