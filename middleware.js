@@ -74,41 +74,45 @@ function unauthorizedApiResponse() {
 }
 
 export async function middleware(request) {
-  const { pathname } = request.nextUrl
-  const isAdminPage = pathname.startsWith('/admin')
-  const isAdminApi = pathname.startsWith('/api/admin')
-  const isLoginPage = pathname === '/admin/login'
-  const isLoginApi = pathname === '/api/admin/login'
-  const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value
+  try {
+    const { pathname } = request.nextUrl
+    const isAdminPage = pathname.startsWith('/admin')
+    const isAdminApi = pathname.startsWith('/api/admin')
+    const isLoginPage = pathname === '/admin/login'
+    const isLoginApi = pathname === '/api/admin/login'
+    const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value
 
-  if ((isAdminPage && !isLoginPage) || (isAdminApi && !isLoginApi)) {
-    const authorized = await isValidAdminToken(authToken)
+    if ((isAdminPage && !isLoginPage) || (isAdminApi && !isLoginApi)) {
+      const authorized = await isValidAdminToken(authToken)
 
-    if (!authorized) {
-      if (isAdminApi) {
-        return unauthorizedApiResponse()
+      if (!authorized) {
+        if (isAdminApi) {
+          return unauthorizedApiResponse()
+        }
+
+        const loginUrl = request.nextUrl.clone()
+        loginUrl.pathname = '/admin/login'
+        loginUrl.searchParams.set('next', pathname)
+
+        return applySecurityHeaders(NextResponse.redirect(loginUrl))
       }
-
-      const loginUrl = request.nextUrl.clone()
-      loginUrl.pathname = '/admin/login'
-      loginUrl.searchParams.set('next', pathname)
-
-      return applySecurityHeaders(NextResponse.redirect(loginUrl))
     }
-  }
 
-  if (isLoginPage) {
-    const authorized = await isValidAdminToken(authToken)
-    if (authorized) {
-      const adminUrl = request.nextUrl.clone()
-      adminUrl.pathname = '/admin'
-      return applySecurityHeaders(NextResponse.redirect(adminUrl))
+    if (isLoginPage) {
+      const authorized = await isValidAdminToken(authToken)
+      if (authorized) {
+        const adminUrl = request.nextUrl.clone()
+        adminUrl.pathname = '/admin'
+        return applySecurityHeaders(NextResponse.redirect(adminUrl))
+      }
     }
-  }
 
-  return applySecurityHeaders(NextResponse.next())
+    return applySecurityHeaders(NextResponse.next())
+  } catch {
+    return NextResponse.next()
+  }
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/admin/:path*', '/api/admin/:path*'],
 }
