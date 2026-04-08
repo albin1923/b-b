@@ -1,18 +1,15 @@
 {
   "name": "bb-apartments",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "hash-password": "node scripts/hash-password.mjs"
+    "start": "next start"
   },
   "dependencies": {
-    "@upstash/redis": "^1.37.0",
     "@vercel/blob": "^2.3.3",
-    "bcryptjs": "^2.4.3",
     "jose": "^5.9.6",
     "lucide-react": "^0.263.1",
     "next": "^15.3.2",

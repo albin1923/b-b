@@ -1,49 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import styles from './login.module.css'
-
-function getTurnstileApi() {
-  if (typeof window === 'undefined') {
-    return null
-  }
-
-  return window.turnstile || null
-}
-
-function ensureTurnstileScript() {
-  if (typeof window === 'undefined') {
-    return Promise.resolve(null)
-  }
-
-  if (window.turnstile) {
-    return Promise.resolve(window.turnstile)
-  }
-
-  return new Promise((resolve) => {
-    const existingScript = document.getElementById('turnstile-script')
-    if (existingScript) {
-      existingScript.addEventListener(
-        'load',
-        () => {
-          resolve(window.turnstile || null)
-        },
-        { once: true }
-      )
-      return
-    }
-
-    const script = document.createElement('script')
-    script.id = 'turnstile-script'
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
-    script.async = true
-    script.defer = true
-    script.onload = () => resolve(window.turnstile || null)
-    script.onerror = () => resolve(null)
-    document.head.append(script)
-  })
-}
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -52,11 +11,6 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [captchaRequired, setCaptchaRequired] = useState(false)
-  const [captchaSiteKey, setCaptchaSiteKey] = useState('')
-  const [captchaToken, setCaptchaToken] = useState('')
-  const captchaContainerRef = useRef(null)
-  const captchaWidgetIdRef = useRef(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -71,13 +25,17 @@ export default function AdminLoginPage() {
     let active = true
 
     async function checkSession() {
-      const response = await fetch('/api/admin/session', {
-        credentials: 'include',
-        cache: 'no-store',
-      })
+      try {
+        const response = await fetch('/api/admin/session', {
+          credentials: 'include',
+          cache: 'no-store',
+        })
 
-      if (active && response.ok) {
-        router.replace('/admin')
+        if (active && response.ok) {
+          router.replace('/admin')
+        }
+      } catch {
+        // Ignore session check errors
       }
     }
 
@@ -87,70 +45,6 @@ export default function AdminLoginPage() {
     }
   }, [router])
 
-  useEffect(() => {
-    if (!captchaRequired || !captchaSiteKey) {
-      return undefined
-    }
-
-    let active = true
-
-    async function mountCaptcha() {
-      const turnstile = await ensureTurnstileScript()
-
-      if (!active || !turnstile || !captchaContainerRef.current || captchaWidgetIdRef.current != null) {
-        return
-      }
-
-      captchaWidgetIdRef.current = turnstile.render(captchaContainerRef.current, {
-        sitekey: captchaSiteKey,
-        callback: (token) => {
-          if (active) {
-            setCaptchaToken(token)
-          }
-        },
-        'expired-callback': () => {
-          if (active) {
-            setCaptchaToken('')
-          }
-        },
-        'error-callback': () => {
-          if (active) {
-            setCaptchaToken('')
-          }
-        },
-      })
-    }
-
-    mountCaptcha()
-
-    return () => {
-      active = false
-    }
-  }, [captchaRequired, captchaSiteKey])
-
-  useEffect(() => {
-    if (captchaRequired) {
-      return
-    }
-
-    setCaptchaToken('')
-    const turnstile = getTurnstileApi()
-
-    if (turnstile && captchaWidgetIdRef.current != null) {
-      turnstile.remove(captchaWidgetIdRef.current)
-      captchaWidgetIdRef.current = null
-    }
-  }, [captchaRequired])
-
-  const resetCaptcha = () => {
-    setCaptchaToken('')
-    const turnstile = getTurnstileApi()
-
-    if (turnstile && captchaWidgetIdRef.current != null) {
-      turnstile.reset(captchaWidgetIdRef.current)
-    }
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault()
     setError('')
@@ -159,28 +53,14 @@ export default function AdminLoginPage() {
     try {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          username,
-          password,
-          captchaToken: captchaRequired ? captchaToken : undefined,
-        }),
+        body: JSON.stringify({ username, password }),
       })
 
       const data = await response.json().catch(() => ({}))
 
       if (!response.ok) {
-        if (data.captchaRequired) {
-          setCaptchaRequired(true)
-          if (typeof data.captchaSiteKey === 'string' && data.captchaSiteKey) {
-            setCaptchaSiteKey(data.captchaSiteKey)
-          }
-          resetCaptcha()
-        }
-
         const retryHint =
           typeof data.retryAfterSeconds === 'number' && data.retryAfterSeconds > 0
             ? ` Please try again in ${data.retryAfterSeconds}s.`
@@ -188,10 +68,6 @@ export default function AdminLoginPage() {
 
         throw new Error(`${data.error || 'Login failed'}${retryHint}`)
       }
-
-      setCaptchaRequired(false)
-      setCaptchaSiteKey('')
-      setCaptchaToken('')
 
       router.replace(nextPath)
     } catch (err) {
@@ -231,20 +107,12 @@ export default function AdminLoginPage() {
             />
           </label>
 
-          {captchaRequired && (
-            <div className={styles.captchaField}>
-              <span>Security check required</span>
-              <div ref={captchaContainerRef} />
-              {!captchaToken && <p className={styles.captchaHint}>Complete the CAPTCHA to continue.</p>}
-            </div>
-          )}
-
           {error && <p className={styles.error}>{error}</p>}
 
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={loading || (captchaRequired && !captchaToken)}
+            disabled={loading}
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

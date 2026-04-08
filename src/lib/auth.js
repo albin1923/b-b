@@ -1,7 +1,4 @@
-import 'server-only'
-
 import crypto from 'node:crypto'
-import bcrypt from 'bcryptjs'
 import { jwtVerify, SignJWT } from 'jose'
 import {
   AUTH_COOKIE_NAME,
@@ -10,11 +7,15 @@ import {
 } from './auth-constants'
 import { getJwtSecret } from './security-env'
 
+// Hardcoded admin credentials
+const ADMIN_USERNAME = 'admin@b&b#'
+const ADMIN_PASSWORD = 'b&bappartments@4213#'
+
 const encoder = new TextEncoder()
 
 function safeEqual(left, right) {
-  const leftBuffer = Buffer.from(left)
-  const rightBuffer = Buffer.from(right)
+  const leftBuffer = Buffer.from(String(left))
+  const rightBuffer = Buffer.from(String(right))
 
   if (leftBuffer.length !== rightBuffer.length) {
     return false
@@ -39,32 +40,10 @@ function isSameOriginRequest(request) {
   }
 }
 
-export function isAdminAuthConfigured() {
-  return Boolean(process.env.ADMIN_USERNAME && process.env.ADMIN_PASSWORD_HASH)
-}
-
-export function getJwtConfigurationError() {
-  try {
-    getJwtSecret()
-    return null
-  } catch (error) {
-    return error instanceof Error ? error.message : 'JWT_SECRET is not configured correctly.'
-  }
-}
-
-export async function verifyAdminCredentials(username, password) {
-  const configuredUsername = process.env.ADMIN_USERNAME
-  const configuredPasswordHash = process.env.ADMIN_PASSWORD_HASH
-
-  if (!configuredUsername || !configuredPasswordHash) {
-    throw new Error('ADMIN_USERNAME and ADMIN_PASSWORD_HASH must be configured.')
-  }
-
-  if (!safeEqual(String(username || ''), configuredUsername)) {
-    return false
-  }
-
-  return bcrypt.compare(String(password || ''), configuredPasswordHash)
+export function verifyAdminCredentials(username, password) {
+  const usernameMatch = safeEqual(String(username || ''), ADMIN_USERNAME)
+  const passwordMatch = safeEqual(String(password || ''), ADMIN_PASSWORD)
+  return usernameMatch && passwordMatch
 }
 
 export async function createAuthToken(username) {

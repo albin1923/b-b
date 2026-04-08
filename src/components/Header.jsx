@@ -13,6 +13,7 @@ const navLinks = [
   { to: '/facilities', label: 'Facilities' },
   { to: '/attractions', label: 'Nearby' },
   { to: '/gallery', label: 'Gallery' },
+  { to: '/news', label: 'News' },
   { to: '/contact', label: 'Contact' },
 ]
 

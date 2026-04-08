@@ -5,22 +5,11 @@ import { getJwtSecret } from './src/lib/security-env'
 
 const encoder = new TextEncoder()
 
-function getJwtSecretBytes() {
-  try {
-    return encoder.encode(getJwtSecret())
-  } catch {
-    return null
-  }
-}
-
 async function isValidAdminToken(token) {
-  const secret = getJwtSecretBytes()
-
-  if (!token || !secret) {
-    return false
-  }
+  if (!token) return false
 
   try {
+    const secret = encoder.encode(getJwtSecret())
     const result = await jwtVerify(token, secret)
     return result.payload.role === 'admin'
   } catch {
@@ -28,49 +17,11 @@ async function isValidAdminToken(token) {
   }
 }
 
-function buildCsp() {
-  const isDev = process.env.NODE_ENV !== 'production'
-  const scriptSrc = isDev
-    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-    : "script-src 'self' 'unsafe-inline'"
-
-  const directives = [
-    "default-src 'self'",
-    scriptSrc,
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' data: https://fonts.gstatic.com",
-    "img-src 'self' data: blob: https:",
-    "connect-src 'self' https:",
-    "frame-src 'self' https://www.google.com https://www.google.com/maps",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "frame-ancestors 'self'",
-  ]
-
-  if (!isDev) {
-    directives.push('upgrade-insecure-requests')
-  }
-
-  return directives.join('; ')
-}
-
 function applySecurityHeaders(response) {
-  response.headers.set('Content-Security-Policy', buildCsp())
   response.headers.set('X-Frame-Options', 'SAMEORIGIN')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
-
-  if (process.env.NODE_ENV === 'production') {
-    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
-  }
-
   return response
-}
-
-function unauthorizedApiResponse() {
-  return applySecurityHeaders(NextResponse.json({ error: 'Unauthorized' }, { status: 401 }))
 }
 
 export async function middleware(request) {
@@ -82,22 +33,25 @@ export async function middleware(request) {
     const isLoginApi = pathname === '/api/admin/login'
     const authToken = request.cookies.get(AUTH_COOKIE_NAME)?.value
 
+    // Protect admin pages and APIs (except login)
     if ((isAdminPage && !isLoginPage) || (isAdminApi && !isLoginApi)) {
       const authorized = await isValidAdminToken(authToken)
 
       if (!authorized) {
         if (isAdminApi) {
-          return unauthorizedApiResponse()
+          return applySecurityHeaders(
+            NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+          )
         }
 
         const loginUrl = request.nextUrl.clone()
         loginUrl.pathname = '/admin/login'
         loginUrl.searchParams.set('next', pathname)
-
         return applySecurityHeaders(NextResponse.redirect(loginUrl))
       }
     }
 
+    // Redirect from login page if already authenticated
     if (isLoginPage) {
       const authorized = await isValidAdminToken(authToken)
       if (authorized) {

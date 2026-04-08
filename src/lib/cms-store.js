@@ -1,5 +1,3 @@
-import 'server-only'
-
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { promises as fs } from 'node:fs'

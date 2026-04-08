@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import './News.css'
 
 function formatDate(dateInput) {
@@ -16,39 +17,97 @@ function formatDate(dateInput) {
   }).format(date)
 }
 
-export default function NewsPage({ newsItems = [] }) {
+function NewsModal({ item, onClose }) {
+  if (!item) return null
+
   return (
-    <section className="news section" id="news">
-      <div className="container">
-        <div className="section-header">
-          <span className="section-tag">News</span>
-          <h2 className="section-title">News & <span className="text-gradient">Events</span></h2>
-          <p className="section-subtitle">Latest updates and upcoming happenings at B&B Apartments</p>
+    <div className="news-modal-overlay" onClick={onClose}>
+      <article className="news-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="news-modal-close" onClick={onClose} aria-label="Close">
+          ✕
+        </button>
+        {item.imageUrl && (
+          <div className="news-modal-image-wrap">
+            <img src={item.imageUrl} alt={item.title} />
+          </div>
+        )}
+        <div className="news-modal-body">
+          <time className="news-modal-date">{formatDate(item.date)}</time>
+          <h2 className="news-modal-title">{item.title}</h2>
+          <p className="news-modal-excerpt">{item.excerpt}</p>
+          <div className="news-modal-divider" />
+          <div className="news-modal-content">
+            {item.content.split('\n').map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         </div>
-        <div className="news-grid">
-          {newsItems.map((item) => (
-            <article className="news-card" key={item.id}>
-              <img src={item.imageUrl} alt={item.title} loading="lazy" />
-              <div className="news-content">
-                <h3 className="news-title">{item.title}</h3>
-                <p className="news-date">{formatDate(item.date)}</p>
-                <p className="news-excerpt">{item.excerpt}</p>
+      </article>
+    </div>
+  )
+}
+
+export default function NewsPage({ newsItems = [] }) {
+  const [selectedItem, setSelectedItem] = useState(null)
+
+  return (
+    <section className="news-page" id="news-events">
+      <div className="news-page-container">
+        {/* Hero Banner */}
+        <div className="news-hero">
+          <span className="news-hero-tag">Stay Informed</span>
+          <h1 className="news-hero-title">
+            News & <span className="news-gradient-text">Events</span>
+          </h1>
+          <p className="news-hero-subtitle">
+            Latest updates, announcements, and upcoming happenings at B&B Apartments Konni
+          </p>
+        </div>
+
+        {/* News Grid */}
+        <div className="news-items-grid">
+          {newsItems.map((item, index) => (
+            <article
+              className={`news-item-card ${index === 0 ? 'news-item-featured' : ''}`}
+              key={item.id}
+              onClick={() => setSelectedItem(item)}
+            >
+              <div className="news-item-image-wrap">
+                {item.imageUrl ? (
+                  <img src={item.imageUrl} alt={item.title} loading="lazy" />
+                ) : (
+                  <div className="news-item-no-image">
+                    <span>📰</span>
+                  </div>
+                )}
+                <div className="news-item-image-overlay" />
+              </div>
+              <div className="news-item-body">
+                <time className="news-item-date">{formatDate(item.date)}</time>
+                <h3 className="news-item-title">{item.title}</h3>
+                <p className="news-item-excerpt">{item.excerpt}</p>
+                <span className="news-read-more">
+                  Read more
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
               </div>
             </article>
           ))}
 
           {newsItems.length === 0 && (
-            <article className="news-card">
-              <div className="news-content">
-                <h3 className="news-title">No news items published yet</h3>
-                <p className="news-excerpt">
-                  New announcements and events will appear here once they are published.
-                </p>
-              </div>
-            </article>
+            <div className="news-empty-state">
+              <div className="news-empty-icon">📰</div>
+              <h3>No news items published yet</h3>
+              <p>New announcements and events will appear here once they are published through the admin panel.</p>
+            </div>
           )}
         </div>
       </div>
+
+      {/* Detail Modal */}
+      <NewsModal item={selectedItem} onClose={() => setSelectedItem(null)} />
     </section>
   )
 }
