@@ -1,7 +1,6 @@
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { promises as fs } from 'node:fs'
-import { del, put } from '@vercel/blob'
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024
 const ALLOWED_IMAGE_TYPES = new Set([
@@ -37,6 +36,24 @@ const EXTENSION_TO_MIME = new Map([
   ['.heif', 'image/heif'],
   ['.bmp', 'image/bmp'],
 ])
+
+// Try multiple env var name patterns that Vercel may use
+function getBlobToken() {
+  return (
+    process.env.BLOB_READ_WRITE_TOKEN ||
+    process.env.bb_blob_BLOB_READ_WRITE_TOKEN ||
+    process.env.b_b_blob_BLOB_READ_WRITE_TOKEN ||
+    ''
+  ).trim() || null
+}
+
+async function getBlobModule() {
+  try {
+    return await import('@vercel/blob')
+  } catch {
+    return null
+  }
+}
 
 function sanitizeSegment(value, fallback = 'general') {
   const sanitized = String(value || '')
@@ -100,29 +117,36 @@ export async function uploadImageFile(file, { folder = 'general' } = {}) {
   const safeFolder = sanitizeSegment(folder)
   const safeExtension = fileExtensionFromType(mimeType)
   const fileName = `${Date.now()}-${crypto.randomUUID()}${safeExtension}`
+  const token = getBlobToken()
 
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    try {
-      const blob = await put(`cms/${safeFolder}/${fileName}`, file, {
-        token: process.env.BLOB_READ_WRITE_TOKEN,
-        access: 'public',
-        contentType: mimeType,
-      })
-
-      return { url: blob.url }
-    } catch (error) {
-      if (process.env.VERCEL) {
-        throw new Error(
-          error instanceof Error
-            ? `Upload failed with Blob storage: ${error.message}`
-            : 'Upload failed with Blob storage.'
-        )
+  if (token) {
+    const blob = await getBlobModule()
+    if (blob) {
+      try {
+        const result = await blob.put(`cms/${safeFolder}/${fileName}`, file, {
+          token,
+          access: 'public',
+          contentType: mimeType,
+        })
+        return { url: result.url }
+      } catch (error) {
+        if (process.env.VERCEL) {
+          throw new Error(
+            error instanceof Error
+              ? `Upload failed: ${error.message}`
+              : 'Upload failed with Blob storage.'
+          )
+        }
+        // Fall through to local upload
       }
     }
   }
 
   if (process.env.VERCEL) {
-    throw new Error('BLOB_READ_WRITE_TOKEN is required for uploads on Vercel.')
+    throw new Error(
+      'Image upload requires BLOB_READ_WRITE_TOKEN. ' +
+      'Go to Vercel Dashboard → Storage → Connect your Blob store to this project.'
+    )
   }
 
   const uploadDir = path.join(process.cwd(), 'public', 'uploads', safeFolder)
@@ -140,11 +164,16 @@ export async function deleteManagedImage(url) {
     return
   }
 
-  if (isManagedBlobUpload(url) && process.env.BLOB_READ_WRITE_TOKEN) {
-    try {
-      await del(url, { token: process.env.BLOB_READ_WRITE_TOKEN })
-    } catch {
-      // Ignore deletion failures for orphan cleanup.
+  const token = getBlobToken()
+
+  if (isManagedBlobUpload(url) && token) {
+    const blob = await getBlobModule()
+    if (blob) {
+      try {
+        await blob.del(url, { token })
+      } catch {
+        // Ignore deletion failures for orphan cleanup.
+      }
     }
     return
   }

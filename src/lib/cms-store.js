@@ -1,7 +1,6 @@
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { promises as fs } from 'node:fs'
-import { list, put } from '@vercel/blob'
 import { buildDefaultCmsData } from './cms-defaults'
 
 const LOCAL_DATA_DIR = path.join(process.cwd(), 'data')
@@ -9,6 +8,25 @@ const LOCAL_DATA_FILE = path.join(LOCAL_DATA_DIR, 'cms.json')
 const BLOB_PREFIX = 'cms/content/'
 
 let cachedBlobUrl = null
+
+// Dynamically import @vercel/blob only when needed (prevents build issues)
+async function getBlobModule() {
+  try {
+    return await import('@vercel/blob')
+  } catch {
+    return null
+  }
+}
+
+// Try multiple env var name patterns that Vercel may use
+function getBlobToken() {
+  return (
+    process.env.BLOB_READ_WRITE_TOKEN ||
+    process.env.bb_blob_BLOB_READ_WRITE_TOKEN ||
+    process.env.b_b_blob_BLOB_READ_WRITE_TOKEN ||
+    ''
+  ).trim() || null
+}
 
 function nowIso() {
   return new Date().toISOString()
@@ -66,19 +84,28 @@ function normalizeCmsData(raw) {
 }
 
 async function ensureLocalFile() {
-  await fs.mkdir(LOCAL_DATA_DIR, { recursive: true })
   try {
-    await fs.access(LOCAL_DATA_FILE)
+    await fs.mkdir(LOCAL_DATA_DIR, { recursive: true })
+    try {
+      await fs.access(LOCAL_DATA_FILE)
+    } catch {
+      await fs.writeFile(LOCAL_DATA_FILE, JSON.stringify(cloneDefaults(), null, 2), 'utf8')
+    }
   } catch {
-    await fs.writeFile(LOCAL_DATA_FILE, JSON.stringify(cloneDefaults(), null, 2), 'utf8')
+    // On Vercel, filesystem is read-only — this is expected to fail
   }
 }
 
 async function readLocalData() {
   await ensureLocalFile()
-  const file = await fs.readFile(LOCAL_DATA_FILE, 'utf8')
-  const parsed = JSON.parse(file)
-  return normalizeCmsData(parsed)
+  try {
+    const file = await fs.readFile(LOCAL_DATA_FILE, 'utf8')
+    const parsed = JSON.parse(file)
+    return normalizeCmsData(parsed)
+  } catch {
+    // If file doesn't exist or can't be read, return defaults
+    return normalizeCmsData(cloneDefaults())
+  }
 }
 
 async function writeLocalData(data) {
@@ -86,23 +113,24 @@ async function writeLocalData(data) {
   await fs.writeFile(LOCAL_DATA_FILE, JSON.stringify(data, null, 2), 'utf8')
 }
 
-async function readBlobData() {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    throw new Error('BLOB_READ_WRITE_TOKEN is missing.')
+async function readBlobData(token) {
+  const blob = await getBlobModule()
+  if (!blob) {
+    throw new Error('Blob module not available')
   }
 
   let blobUrl = cachedBlobUrl
 
   if (!blobUrl) {
-    const { blobs } = await list({
-      token: process.env.BLOB_READ_WRITE_TOKEN,
+    const { blobs } = await blob.list({
+      token,
       prefix: BLOB_PREFIX,
       limit: 1000,
     })
 
     if (!blobs.length) {
       const defaults = cloneDefaults()
-      await writeBlobData(defaults)
+      await writeBlobData(defaults, token)
       return defaults
     }
 
@@ -123,40 +151,57 @@ async function readBlobData() {
   return normalizeCmsData(raw)
 }
 
-async function writeBlobData(data) {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    throw new Error('BLOB_READ_WRITE_TOKEN is missing.')
+async function writeBlobData(data, token) {
+  const blob = await getBlobModule()
+  if (!blob) {
+    throw new Error('Blob module not available')
   }
 
   const key = `${BLOB_PREFIX}${Date.now()}-${crypto.randomUUID()}.json`
-  const blob = await put(key, JSON.stringify(data), {
-    token: process.env.BLOB_READ_WRITE_TOKEN,
+  const result = await blob.put(key, JSON.stringify(data), {
+    token,
     access: 'public',
     contentType: 'application/json',
   })
 
-  cachedBlobUrl = blob.url
+  cachedBlobUrl = result.url
 }
 
 async function loadData() {
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    return readBlobData()
+  const token = getBlobToken()
+
+  // If we have a blob token, use Vercel Blob storage
+  if (token) {
+    try {
+      return await readBlobData(token)
+    } catch (err) {
+      console.error('[CMS] Blob read failed, falling back to defaults:', err.message)
+      return normalizeCmsData(cloneDefaults())
+    }
   }
 
+  // On Vercel without a token — return defaults gracefully (no crash)
   if (process.env.VERCEL) {
-    throw new Error('Set BLOB_READ_WRITE_TOKEN for persistent CMS storage on Vercel.')
+    console.warn('[CMS] No BLOB_READ_WRITE_TOKEN set. Using default CMS data.')
+    return normalizeCmsData(cloneDefaults())
   }
 
+  // Local development — use filesystem
   return readLocalData()
 }
 
 async function persistData(data) {
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    return writeBlobData(data)
+  const token = getBlobToken()
+
+  if (token) {
+    return writeBlobData(data, token)
   }
 
   if (process.env.VERCEL) {
-    throw new Error('Set BLOB_READ_WRITE_TOKEN for persistent CMS storage on Vercel.')
+    throw new Error(
+      'Cannot save CMS data: BLOB_READ_WRITE_TOKEN is not set. ' +
+      'Go to Vercel Dashboard → Storage → Connect your Blob store to this project.'
+    )
   }
 
   return writeLocalData(data)
