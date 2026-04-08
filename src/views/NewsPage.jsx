@@ -28,7 +28,7 @@ function NewsModal({ item, onClose }) {
         </button>
         {item.imageUrl && (
           <div className="news-modal-image-wrap">
-            <img src={item.imageUrl} alt={item.title} />
+            <img src={item.imageUrl} alt={item.title} referrerPolicy="no-referrer" />
           </div>
         )}
         <div className="news-modal-body">
@@ -74,7 +74,7 @@ export default function NewsPage({ newsItems = [] }) {
             >
               <div className="news-item-image-wrap">
                 {item.imageUrl ? (
-                  <img src={item.imageUrl} alt={item.title} loading="lazy" />
+                  <img src={item.imageUrl} alt={item.title} loading="lazy" referrerPolicy="no-referrer" />
                 ) : (
                   <div className="news-item-no-image">
                     <span>📰</span>

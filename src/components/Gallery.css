@@ -60,10 +60,21 @@
   inset: 0;
   background: linear-gradient(180deg, transparent 40%, rgba(15, 23, 42, 0.85) 100%);
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
   padding: 1.25rem;
   opacity: 0;
   transition: var(--transition);
+}
+
+.gallery-category {
+  color: var(--accent, #d4a853);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
 }
 
 .gallery-item:hover .gallery-overlay {

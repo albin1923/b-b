@@ -5,25 +5,20 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Gallery.css'
 
-const images = [
-  { src: 'https://www.bandbkonni.com/images/unit-1.jpg', alt: 'Living Area', large: true },
-  { src: 'https://www.bandbkonni.com/images/unit-3.jpg', alt: 'Bedroom' },
-  { src: 'https://www.bandbkonni.com/images/unit-5.jpg', alt: 'Kitchen' },
-  { src: 'https://www.bandbkonni.com/images/unit-7.jpg', alt: 'Conference Hall', tall: true },
-  { src: 'https://www.bandbkonni.com/images/unit-9.jpg', alt: 'Dining Area' },
-  { src: 'https://www.bandbkonni.com/images/unit-11.jpg', alt: 'Bathroom' },
-  { src: 'https://www.bandbkonni.com/images/unit-13.jpg', alt: 'Balcony' },
-  { src: 'https://www.bandbkonni.com/images/unit-15.jpg', alt: 'Exterior' },
-  { src: 'https://www.bandbkonni.com/images/unit-17.jpg', alt: 'Garden' },
-  { src: 'https://www.bandbkonni.com/images/unit-19.jpg', alt: 'Parking' },
-  { src: 'https://www.bandbkonni.com/images/unit-21.jpg', alt: 'Reception' },
-  { src: 'https://www.bandbkonni.com/images/wlcm-img.jpg', alt: 'Building' },
-]
-
-export default function Gallery() {
+export default function Gallery({ images = [] }) {
   const [lightbox, setLightbox] = useState(null)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [sectionRef, sectionVisible] = useScrollReveal()
+
+  // Map CMS gallery items to the format the component expects
+  const galleryImages = images.map((item) => ({
+    src: item.imageUrl,
+    alt: item.alt || item.title,
+    label: item.title,
+    category: item.category,
+    large: item.layout === 'large',
+    tall: item.layout === 'tall',
+  }))
 
   const openLightbox = (image, index) => {
     setLightbox(image)
@@ -31,9 +26,9 @@ export default function Gallery() {
   }
 
   const navigate = (dir) => {
-    const next = (lightboxIndex + dir + images.length) % images.length
+    const next = (lightboxIndex + dir + galleryImages.length) % galleryImages.length
     setLightboxIndex(next)
-    setLightbox(images[next])
+    setLightbox(galleryImages[next])
   }
 
   return (
@@ -48,15 +43,21 @@ export default function Gallery() {
         </div>
 
         <div className={`gallery-grid ${sectionVisible ? 'stagger-children visible' : 'stagger-children'}`}>
-          {images.map((image, index) => (
+          {galleryImages.map((image, index) => (
             <div 
               className={`gallery-item ${image.large ? 'large' : ''} ${image.tall ? 'tall' : ''}`}
               key={index}
               onClick={() => openLightbox(image, index)}
             >
-              <img src={image.src} alt={image.alt} loading="lazy" />
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
               <div className="gallery-overlay">
-                <span className="gallery-label">{image.alt}</span>
+                {image.category && <span className="gallery-category">{image.category}</span>}
+                <span className="gallery-label">{image.label}</span>
               </div>
             </div>
           ))}
@@ -71,12 +72,17 @@ export default function Gallery() {
           <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); navigate(-1); }}>
             <ChevronLeft size={28} />
           </button>
-          <img src={lightbox.src} alt={lightbox.alt} onClick={(e) => e.stopPropagation()} />
+          <img
+            src={lightbox.src}
+            alt={lightbox.alt}
+            onClick={(e) => e.stopPropagation()}
+            referrerPolicy="no-referrer"
+          />
           <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); navigate(1); }}>
             <ChevronRight size={28} />
           </button>
           <div className="lightbox-counter" onClick={(e) => e.stopPropagation()}>
-            {lightboxIndex + 1} / {images.length}
+            {lightboxIndex + 1} / {galleryImages.length}
           </div>
         </div>
       )}
