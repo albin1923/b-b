@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Users, Briefcase, Heart, Globe } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Guests.css'
@@ -9,25 +10,25 @@ const guests = [
     icon: Heart,
     title: 'Pilgrims',
     description: 'Gateway to Sabarimala and other sacred temples',
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',
+    image: '/Website Photos/with celebrities/IMG_20200109_105513.jpg',
   },
   {
     icon: Users,
     title: 'Families',
     description: 'Perfect for family gatherings and celebrations',
-    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80',
+    image: '/Website Photos/with celebrities/IMG_20191010_194602.jpg',
   },
   {
     icon: Briefcase,
     title: 'Business',
     description: 'Ideal for corporate stays and meetings',
-    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
+    image: '/Website Photos/with celebrities/IMG_20240612_073152.jpg',
   },
   {
     icon: Globe,
     title: 'NRIs',
     description: 'A home away from home in Kerala',
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80',
+    image: '/Website Photos/with celebrities/IMG_20240525_102609.jpg',
   },
 ]
 
@@ -48,7 +49,13 @@ export default function Guests() {
           {guests.map((guest, index) => (
             <div className="guest-card" key={index}>
               <div className="guest-image">
-                <img src={guest.image} alt={guest.title} loading="lazy" />
+                <Image 
+                  src={guest.image} 
+                  alt={guest.title} 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
               </div>
               <div className="guest-overlay"></div>
               <div className="guest-content">

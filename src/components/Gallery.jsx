@@ -93,12 +93,17 @@ export default function Gallery({ images = [] }) {
           <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); navigate(-1); }}>
             <ChevronLeft size={28} />
           </button>
-          <img
-            src={lightbox.src}
-            alt={lightbox.alt}
-            onClick={(e) => e.stopPropagation()}
-            referrerPolicy="no-referrer"
-          />
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={lightbox.src}
+              alt={lightbox.alt}
+              fill
+              sizes="100vw"
+              style={{ objectFit: 'contain' }}
+              quality={85}
+              priority
+            />
+          </div>
           <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); navigate(1); }}>
             <ChevronRight size={28} />
           </button>
