@@ -7,22 +7,22 @@ import './Hero.css'
 
 const slides = [
   {
-    image: 'https://www.bandbkonni.com/images/wlcm-img.jpg',
+    image: '/Website Photos/General/Exterior super view.jpg',
     title: 'Welcome to B&B',
     subtitle: 'A Modern Haven in God\'s Own Country',
     description: 'Stay with us, feel at Home. A modern apartment complex with all modern finishes including basement parking, lift, conference hall, roof top garden & more.'
   },
   {
-    image: 'https://www.bandbkonni.com/images/nar-by1.jpg',
+    image: '/Website Photos/General/Building front main.JPG',
+    title: 'Modern Living',
+    subtitle: 'Premium Comfort',
+    description: 'Experience modern amenities and traditional Kerala hospitality in our fully equipped apartments.'
+  },
+  {
+    image: '/Website Photos/General/Exterior.jpg',
     title: 'Save The Wild Nature!',
     subtitle: 'Near By Attractions',
     description: 'Konni - an attractive tourist destination with Elephant cradle, Adavi Bowl boating & more.'
-  },
-  {
-    image: 'https://www.bandbkonni.com/images/unit-1.jpg',
-    title: 'Premium Comfort',
-    subtitle: 'Modern Living',
-    description: 'Experience modern amenities and traditional Kerala hospitality in our fully equipped apartments.'
   }
 ]
 

@@ -9,25 +9,25 @@ const guests = [
     icon: Heart,
     title: 'Pilgrims',
     description: 'Gateway to Sabarimala and other sacred temples',
-    image: 'https://www.bandbkonni.com/images/unit-9.jpg',
+    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: Users,
     title: 'Families',
     description: 'Perfect for family gatherings and celebrations',
-    image: 'https://www.bandbkonni.com/images/unit-11.jpg',
+    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: Briefcase,
     title: 'Business',
     description: 'Ideal for corporate stays and meetings',
-    image: 'https://www.bandbkonni.com/images/unit-13.jpg',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
   },
   {
     icon: Globe,
     title: 'NRIs',
     description: 'A home away from home in Kerala',
-    image: 'https://www.bandbkonni.com/images/unit-15.jpg',
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80',
   },
 ]
 

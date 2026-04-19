@@ -22,8 +22,8 @@ export default function About() {
           <div className="about-images reveal-left">
             <div className="about-img-main">
               <img 
-                src="https://www.bandbkonni.com/images/unit-1.jpg" 
-                alt="B&B Apartments Interior"
+                src="/Website Photos/General/Exterior.jpg" 
+                alt="B&B Apartments Exterior"
                 loading="lazy"
               />
               <div className="about-experience">
@@ -33,7 +33,7 @@ export default function About() {
             </div>
             <div className="about-img-secondary">
               <img 
-                src="https://www.bandbkonni.com/images/unit-2.jpg" 
+                src="/Website Photos/1 BHK/202 MB7.jpg" 
                 alt="B&B Apartments Room"
                 loading="lazy"
               />

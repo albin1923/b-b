@@ -1,7 +1,7 @@
 const now = new Date().toISOString()
 
-// Google Drive direct image URLs: https://lh3.googleusercontent.com/d/FILE_ID
-const driveImg = (id) => `https://lh3.googleusercontent.com/d/${id}`
+// Google Drive thumbnail API for reliable hotlinking
+const driveImg = (id) => `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
 
 export const defaultNewsItems = [
   {

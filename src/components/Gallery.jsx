@@ -6,12 +6,18 @@ import { useScrollReveal } from '../hooks/useAnimations'
 import './Gallery.css'
 
 export default function Gallery({ images = [] }) {
+  const [activeCategory, setActiveCategory] = useState('All')
   const [lightbox, setLightbox] = useState(null)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [sectionRef, sectionVisible] = useScrollReveal()
 
-  // Map CMS gallery items to the format the component expects
-  const galleryImages = images.map((item) => ({
+  const categories = ['All', ...new Set(images.map(img => img.category))]
+
+  const filteredImages = activeCategory === 'All' 
+    ? images.filter(img => img.featured) 
+    : images.filter(img => img.category === activeCategory)
+
+  const galleryImages = filteredImages.map((item) => ({
     src: item.imageUrl,
     alt: item.alt || item.title,
     label: item.title,
@@ -42,6 +48,18 @@ export default function Gallery({ images = [] }) {
           </p>
         </div>
 
+        <div className="gallery-filters">
+          {categories.map(cat => (
+            <button 
+              key={cat} 
+              className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         <div className={`gallery-grid ${sectionVisible ? 'stagger-children visible' : 'stagger-children'}`}>
           {galleryImages.map((image, index) => (
             <div 
@@ -53,7 +71,6 @@ export default function Gallery({ images = [] }) {
                 src={image.src}
                 alt={image.alt}
                 loading="lazy"
-                referrerPolicy="no-referrer"
               />
               <div className="gallery-overlay">
                 {image.category && <span className="gallery-category">{image.category}</span>}

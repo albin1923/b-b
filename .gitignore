@@ -7,3 +7,8 @@ dist
 data/cms.json
 public/uploads/*
 !public/uploads/.gitkeep
+*.MP4
+*.mp4
+*.uf2
+*.pptx
+*.pdf

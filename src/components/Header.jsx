@@ -11,9 +11,9 @@ const navLinks = [
   { to: '/about', label: 'About' },
   { to: '/rooms', label: 'Rooms' },
   { to: '/facilities', label: 'Facilities' },
+  { to: '/news', label: 'News & Events' },
   { to: '/attractions', label: 'Nearby' },
   { to: '/gallery', label: 'Gallery' },
-  { to: '/news', label: 'News' },
   { to: '/contact', label: 'Contact' },
 ]
 

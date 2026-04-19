@@ -46,15 +46,10 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({ error: session.error }, { status: session.status })
   }
 
-  const existingItem = (await getAdminGalleryItems()).find((item) => item.id === id)
   const removed = await deleteGalleryItem(id)
 
   if (!removed) {
     return NextResponse.json({ error: 'Gallery item not found' }, { status: 404 })
-  }
-
-  if (existingItem?.imageUrl) {
-    await deleteManagedImage(existingItem.imageUrl)
   }
 
   return NextResponse.json({ ok: true }, { headers: { 'Cache-Control': 'no-store' } })

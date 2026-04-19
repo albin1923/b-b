@@ -108,13 +108,18 @@ export default function AdminPage() {
   }
 
   const loadData = async () => {
-    const [newsResponse, galleryResponse] = await Promise.all([
-      apiRequest('/api/admin/news'),
-      apiRequest('/api/admin/gallery'),
-    ])
+    try {
+      const [newsResponse, galleryResponse] = await Promise.all([
+        apiRequest('/api/admin/news'),
+        apiRequest('/api/admin/gallery'),
+      ])
 
-    setNewsItems(newsResponse.news || [])
-    setGalleryItems(galleryResponse.gallery || [])
+      setNewsItems(newsResponse.news || [])
+      setGalleryItems(galleryResponse.gallery || [])
+    } catch (error) {
+      console.error('Failed to load CMS data:', error)
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to load content from the server.')
+    }
   }
 
   useEffect(() => {

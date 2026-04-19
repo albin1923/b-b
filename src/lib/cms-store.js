@@ -36,6 +36,15 @@ function cloneDefaults() {
   return JSON.parse(JSON.stringify(buildDefaultCmsData()))
 }
 
+function convertDriveUrl(url) {
+  const str = String(url || '').trim()
+  if (str.includes('lh3.googleusercontent.com/d/')) {
+    const id = str.split('/d/')[1]
+    return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`
+  }
+  return str
+}
+
 function normalizeNewsItem(item) {
   const createdAt = item.createdAt || nowIso()
   const updatedAt = item.updatedAt || createdAt
@@ -45,7 +54,7 @@ function normalizeNewsItem(item) {
     date: String(item.date || '').trim(),
     excerpt: String(item.excerpt || '').trim(),
     content: String(item.content || '').trim(),
-    imageUrl: String(item.imageUrl || '').trim(),
+    imageUrl: convertDriveUrl(item.imageUrl),
     published: Boolean(item.published),
     createdAt,
     updatedAt,
@@ -62,7 +71,7 @@ function normalizeGalleryItem(item) {
     alt: String(item.alt || '').trim(),
     category: String(item.category || '').trim(),
     caption: String(item.caption || '').trim(),
-    imageUrl: String(item.imageUrl || '').trim(),
+    imageUrl: convertDriveUrl(item.imageUrl),
     layout,
     visible: item.visible !== false,
     featured: Boolean(item.featured),
