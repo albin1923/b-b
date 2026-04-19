@@ -16,7 +16,7 @@ export default function Gallery({ images = [] }) {
   const categories = ['All', ...new Set(images.map(img => img.category))]
 
   const filteredImages = activeCategory === 'All' 
-    ? images.filter(img => img.featured) 
+    ? categories.filter(c => c !== 'All').map(cat => images.find(img => img.category === cat)).filter(Boolean)
     : images.filter(img => img.category === activeCategory)
 
   const galleryImages = filteredImages.map((item) => ({

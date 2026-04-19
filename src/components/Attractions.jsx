@@ -7,18 +7,18 @@ import { useScrollReveal } from '../hooks/useAnimations'
 import './Attractions.css'
 
 const touristSpots = [
-  { name: 'Konni Elephant Training Centre', distance: '2 km', image: '/Website Photos/News & Events/IMG-20181018-WA0042.jpg' },
-  { name: 'Adavi Eco Tourism', distance: '10 km', image: '/Website Photos/News & Events/IMG-20190802-WA0002.jpg' },
-  { name: 'Gavi Forest', distance: '55 km', image: '/Website Photos/News & Events/IMG-20190330-WA0011.jpg' },
-  { name: 'Perunthenaruvi Waterfall', distance: '25 km', image: '/Website Photos/News & Events/IMG-20190721-WA0002.jpg' },
+  { name: 'Konni Elephant Training Centre', distance: '2 km', image: 'https://www.bandbkonni.com/images/nar-by1.jpg' },
+  { name: 'Adavi Eco Tourism', distance: '10 km', image: 'https://www.bandbkonni.com/images/nar-by3.jpg' },
+  { name: 'Gavi Forest', distance: '55 km', image: 'https://www.bandbkonni.com/images/nar-by5.jpg' },
+  { name: 'Perunthenaruvi Waterfall', distance: '25 km', image: 'https://www.bandbkonni.com/images/nar-by7.jpg' },
 ]
 
 const pilgrimSpots = [
-  { name: 'Sabarimala Temple', distance: '65 km', image: '/Website Photos/News & Events/IMG_20241228_210647.jpg' },
-  { name: 'Mannadi Temple', distance: '5 km', image: '/Website Photos/News & Events/IMG-20190323-WA0005.jpg' },
-  { name: 'Aranmula Parthasarathy', distance: '15 km', image: '/Website Photos/News & Events/IMG_20191112_175153.jpg' },
-  { name: 'Pandalam Palace', distance: '12 km', image: '/Website Photos/News & Events/bju.jpg' },
-  { name: 'Kalleli Oorali Appoppankavu', distance: '8 km', image: '/Website Photos/News & Events/IMG-20190227-WA0016.jpg' },
+  { name: 'Sabarimala Temple', distance: '65 km', image: 'https://www.bandbkonni.com/images/nar-by9.jpg' },
+  { name: 'Mannadi Temple', distance: '5 km', image: 'https://www.bandbkonni.com/images/nar-by11.jpg' },
+  { name: 'Aranmula Parthasarathy', distance: '15 km', image: 'https://www.bandbkonni.com/images/nar-by13.jpg' },
+  { name: 'Pandalam Palace', distance: '12 km', image: 'https://www.bandbkonni.com/images/nar-by15.jpg' },
+  { name: 'Kalleli Oorali Appoppankavu', distance: '8 km', image: 'https://www.bandbkonni.com/images/nar-by11.jpg' },
 ]
 
 export default function Attractions() {
