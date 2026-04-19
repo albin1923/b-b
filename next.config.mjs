@@ -22,6 +22,9 @@ const nextConfig = {
       },
     ],
   },
+  outputFileTracingExcludes: {
+    '*': ['public/Website Photos/**/*']
+  }
 }
 
 export default nextConfig

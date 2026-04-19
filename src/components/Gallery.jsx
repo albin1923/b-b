@@ -5,6 +5,8 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Gallery.css'
 
+import Image from 'next/image'
+
 export default function Gallery({ images = [] }) {
   const [activeCategory, setActiveCategory] = useState('All')
   const [lightbox, setLightbox] = useState(null)
@@ -67,10 +69,12 @@ export default function Gallery({ images = [] }) {
               key={index}
               onClick={() => openLightbox(image, index)}
             >
-              <img
+              <Image
                 src={image.src}
                 alt={image.alt}
-                loading="lazy"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: 'cover' }}
               />
               <div className="gallery-overlay">
                 {image.category && <span className="gallery-category">{image.category}</span>}

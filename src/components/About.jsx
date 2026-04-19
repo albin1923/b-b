@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Home, ShieldCheck, Leaf, MapPin, ArrowRight } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './About.css'
@@ -21,10 +22,12 @@ export default function About() {
         <div className={`about-grid ${isVisible ? 'visible' : ''}`}>
           <div className="about-images reveal-left">
             <div className="about-img-main">
-              <img 
+              <Image 
                 src="/Website Photos/General/Exterior.jpg" 
                 alt="B&B Apartments Exterior"
-                loading="lazy"
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="about-experience">
                 <span className="exp-number">7+</span>
@@ -32,10 +35,12 @@ export default function About() {
               </div>
             </div>
             <div className="about-img-secondary">
-              <img 
+              <Image 
                 src="/Website Photos/1 BHK/202 MB7.jpg" 
                 alt="B&B Apartments Room"
-                loading="lazy"
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div className="about-decoration"></div>

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Users, ArrowRight, Bed, Bath, UtensilsCrossed, Wifi, Sofa, Star } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useAnimations'
 import './Rooms.css'
@@ -78,7 +79,13 @@ export default function Rooms() {
               style={{ transitionDelay: `${index * 0.1}s` }}
             >
               <div className="room-image">
-                <img src={room.image} alt={room.name} loading="lazy" />
+                <Image 
+                  src={room.image} 
+                  alt={room.name} 
+                  fill 
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
                 {room.featured && <span className="room-badge">Most Popular</span>}
               </div>
               <div className="room-content">
