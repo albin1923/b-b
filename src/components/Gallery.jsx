@@ -70,7 +70,7 @@ export default function Gallery({ images = [] }) {
               onClick={() => openLightbox(image, index)}
             >
               <Image
-                src={image.src}
+                src={encodeURI(image.src)}
                 alt={image.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -95,7 +95,7 @@ export default function Gallery({ images = [] }) {
           </button>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <Image
-              src={lightbox.src}
+              src={encodeURI(lightbox.src)}
               alt={lightbox.alt}
               fill
               sizes="100vw"

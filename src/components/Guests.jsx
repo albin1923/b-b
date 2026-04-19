@@ -50,7 +50,7 @@ export default function Guests() {
             <div className="guest-card" key={index}>
               <div className="guest-image">
                 <Image 
-                  src={guest.image} 
+                  src={encodeURI(guest.image)} 
                   alt={guest.title} 
                   fill
                   style={{ objectFit: 'cover' }}

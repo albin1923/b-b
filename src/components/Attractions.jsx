@@ -60,7 +60,7 @@ export default function Attractions() {
             <div className="attraction-card" key={`${activeTab}-${index}`}>
               <div className="attraction-image" style={{ position: 'relative', width: '100%', height: '200px' }}>
                 <Image 
-                  src={spot.image} 
+                  src={encodeURI(spot.image)} 
                   alt={spot.name} 
                   fill
                   style={{ objectFit: 'cover' }}

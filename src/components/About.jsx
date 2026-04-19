@@ -23,7 +23,7 @@ export default function About() {
           <div className="about-images reveal-left">
             <div className="about-img-main">
               <Image 
-                src="/Website Photos/General/Exterior.jpg" 
+                src={encodeURI("/Website Photos/General/Exterior.jpg")} 
                 alt="B&B Apartments Exterior"
                 fill
                 style={{ objectFit: 'cover' }}
@@ -36,7 +36,7 @@ export default function About() {
             </div>
             <div className="about-img-secondary">
               <Image 
-                src="/Website Photos/1 BHK/202 MB7.jpg" 
+                src={encodeURI("/Website Photos/1 BHK/202 MB7.jpg")} 
                 alt="B&B Apartments Room"
                 fill
                 style={{ objectFit: 'cover' }}

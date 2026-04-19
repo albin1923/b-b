@@ -80,7 +80,7 @@ export default function Rooms() {
             >
               <div className="room-image">
                 <Image 
-                  src={room.image} 
+                  src={encodeURI(room.image)} 
                   alt={room.name} 
                   fill 
                   style={{ objectFit: 'cover' }}

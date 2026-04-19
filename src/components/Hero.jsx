@@ -50,7 +50,7 @@ export default function Hero() {
             className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
           >
             <Image 
-              src={slide.image} 
+              src={encodeURI(slide.image)} 
               alt={slide.title} 
               className="hero-image"
               fill
