@@ -55,6 +55,7 @@ export default function Hero() {
               className="hero-image"
               fill
               priority={index === 0}
+              quality={100}
               style={{ objectFit: 'cover' }}
               sizes="100vw"
             />
